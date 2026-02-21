@@ -140,16 +140,10 @@ struct AddJournalEntryView: View {
     @State private var selectedMood: Mood = .neutral
     @State private var note = ""
     @State private var selectedSymptoms: Set<Symptom> = []
-    @State private var date = Date()
 
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Tarih")) {
-                    DatePicker("Tarih", selection: $date, displayedComponents: .date)
-                        .environment(\.locale, Locale(identifier: "tr_TR"))
-                }
-
                 Section(header: Text("Nasıl Hissediyorsun?")) {
                     LazyVGrid(columns: [
                         GridItem(.flexible()),
@@ -232,7 +226,7 @@ struct AddJournalEntryView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Kaydet") {
                         let entry = JournalEntry(
-                            date: date,
+                            date: Date(),
                             mood: selectedMood,
                             note: note,
                             symptoms: Array(selectedSymptoms)

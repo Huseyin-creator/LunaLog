@@ -25,6 +25,7 @@
 		CD3DFCFD6B5A2DB9F4A26AAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6A6720DEA4FB541A46579B /* Assets.xcassets */; };
 		CD75A1AEBEB899CE1ABD438D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C113D36E9E61BA0431829 /* GeminiService.swift */; };
 		D7BD20163AEF0C63877EC538 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2295EE6558DB351D1F33DF /* SettingsView.swift */; };
+		E7346C59DEF64687B40CB775 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D2F811799F7986C58CF91DD /* Secrets.plist */; };
 		F4AD0B3FB7E34F88E0D4B5CC /* AddPeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F48D4E415FC3B5A3284902 /* AddPeriodView.swift */; };
 		F68A2E0B6B4B934DA9E74C4A /* LunaLogWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -56,6 +57,7 @@
 /* Begin PBXFileReference section */
 		01B0256EEA38597884FF9D42 /* CycleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleManager.swift; sourceTree = "<group>"; };
 		188295CBD3E397350B2057D1 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		1D2F811799F7986C58CF91DD /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Secrets.plist; sourceTree = "<group>"; };
 		20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LunaLogWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5AF4E80D4AB0FAE4F47CF6 /* LunaLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLog.entitlements; sourceTree = "<group>"; };
 		4ABEBFBD879960D48C0F493F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				F1C9D5A507FA5E42817561FA /* Assets.xcassets */,
 				2A5AF4E80D4AB0FAE4F47CF6 /* LunaLog.entitlements */,
 				B7666DC918D770BB65585823 /* LunaLogApp.swift */,
+				1D2F811799F7986C58CF91DD /* Secrets.plist */,
 				F7559488380F7D1EB29E82BE /* Models */,
 				E5C49BBDE8CBE50F1991A471 /* Services */,
 				F1784C815A8D872304F21D9B /* ViewModels */,
@@ -247,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AF95C018B4FA260E7D74E0A /* Assets.xcassets in Resources */,
+				E7346C59DEF64687B40CB775 /* Secrets.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

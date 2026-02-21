@@ -5,8 +5,14 @@ class GeminiService {
     private init() {}
 
     private let baseURL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
-    // Varsayılan API anahtarı - ileride Firebase'e taşınacak
-    private let defaultApiKey = "AIzaSyBpttZ-6NXrziR58jXaOI1nD8WX7i1VtP4"
+    private let defaultApiKey: String = {
+        guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+              let dict = NSDictionary(contentsOfFile: path),
+              let key = dict["GEMINI_API_KEY"] as? String else {
+            return ""
+        }
+        return key
+    }()
 
     func sendMessage(
         userMessage: String,

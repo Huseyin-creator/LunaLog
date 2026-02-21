@@ -16,3 +16,6 @@ Packages/
 
 # CocoaPods
 Pods/
+
+# Secrets
+Secrets.plist
