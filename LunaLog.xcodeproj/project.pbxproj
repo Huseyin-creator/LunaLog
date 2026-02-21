@@ -1,0 +1,550 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		06B2A44EC0677E0C2F417019 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF8C2EDE1457D0485314F1 /* Period.swift */; };
+		085983DE58883F8142AEE905 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8515A46612D56F12E8CB037A /* HistoryView.swift */; };
+		1C226BAED1C005958A367106 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB7F4D98E7901BBC67AD5B5 /* ChatViewModel.swift */; };
+		23EB8E7A0B989FD8334AAAFA /* LunaLogWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1CF80AC2F50FCBC8EAE918 /* LunaLogWidgetBundle.swift */; };
+		26ABEDCD90E0A677ECDBC360 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A1CC3B9795F35BE968BE55 /* StorageService.swift */; };
+		4866E106BF3613A014BFCF2E /* CycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0256EEA38597884FF9D42 /* CycleManager.swift */; };
+		4A77FF65C41F429599618407 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABEBFBD879960D48C0F493F /* NotificationService.swift */; };
+		5AF95C018B4FA260E7D74E0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1C9D5A507FA5E42817561FA /* Assets.xcassets */; };
+		60CAAB34DEFEFF8DE12EE05B /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C843E16291DED325C19AA /* ChatView.swift */; };
+		6146E8B96C151EFDFB853556 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF8C2EDE1457D0485314F1 /* Period.swift */; };
+		8857D3F7B6A013B1BB15FEBC /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9AD86436E2244BFC80623 /* CalendarView.swift */; };
+		8C60DC4984112D4307392706 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188295CBD3E397350B2057D1 /* DashboardView.swift */; };
+		A104838000D65C7124238909 /* LunaLogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7666DC918D770BB65585823 /* LunaLogApp.swift */; };
+		AEE7AAC4EEF81780E99DAE7F /* LunaLogWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4452DF7623B88499BA6E76 /* LunaLogWidget.swift */; };
+		C44EFDC2A45A2B096480FBB7 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7821BC75BD4E53E12DF52 /* JournalView.swift */; };
+		CD3DFCFD6B5A2DB9F4A26AAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6A6720DEA4FB541A46579B /* Assets.xcassets */; };
+		CD75A1AEBEB899CE1ABD438D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C113D36E9E61BA0431829 /* GeminiService.swift */; };
+		D7BD20163AEF0C63877EC538 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2295EE6558DB351D1F33DF /* SettingsView.swift */; };
+		F4AD0B3FB7E34F88E0D4B5CC /* AddPeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F48D4E415FC3B5A3284902 /* AddPeriodView.swift */; };
+		F68A2E0B6B4B934DA9E74C4A /* LunaLogWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F62E90778D328A457095C02F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EC69F52A5835D3937785AF0C /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 737E1B33D95BE4B362EF4337;
+			remoteInfo = LunaLogWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		38BB0A0CDCE9CFEE004DE3B0 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				F68A2E0B6B4B934DA9E74C4A /* LunaLogWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		01B0256EEA38597884FF9D42 /* CycleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleManager.swift; sourceTree = "<group>"; };
+		188295CBD3E397350B2057D1 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LunaLogWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		2A5AF4E80D4AB0FAE4F47CF6 /* LunaLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLog.entitlements; sourceTree = "<group>"; };
+		4ABEBFBD879960D48C0F493F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		58A1CC3B9795F35BE968BE55 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		6D2295EE6558DB351D1F33DF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		763C113D36E9E61BA0431829 /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
+		827C843E16291DED325C19AA /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		8515A46612D56F12E8CB037A /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		85A7821BC75BD4E53E12DF52 /* JournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JournalView.swift; sourceTree = "<group>"; };
+		90F48D4E415FC3B5A3284902 /* AddPeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPeriodView.swift; sourceTree = "<group>"; };
+		9E6A6720DEA4FB541A46579B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AC4452DF7623B88499BA6E76 /* LunaLogWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaLogWidget.swift; sourceTree = "<group>"; };
+		B2A9AD86436E2244BFC80623 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		B7666DC918D770BB65585823 /* LunaLogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaLogApp.swift; sourceTree = "<group>"; };
+		BEEF8C2EDE1457D0485314F1 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
+		CD1CF80AC2F50FCBC8EAE918 /* LunaLogWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaLogWidgetBundle.swift; sourceTree = "<group>"; };
+		D9DDE821A91C9A7B768C432D /* LunaLogWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLogWidget.entitlements; sourceTree = "<group>"; };
+		EAB7F4D98E7901BBC67AD5B5 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
+		ECA129CCB9D2A1A9ECBCA919 /* LunaLog.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LunaLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1C9D5A507FA5E42817561FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		4C177CD908A4E595A19DB83C /* LunaLogWidget */ = {
+			isa = PBXGroup;
+			children = (
+				9E6A6720DEA4FB541A46579B /* Assets.xcassets */,
+				D9DDE821A91C9A7B768C432D /* LunaLogWidget.entitlements */,
+				AC4452DF7623B88499BA6E76 /* LunaLogWidget.swift */,
+				CD1CF80AC2F50FCBC8EAE918 /* LunaLogWidgetBundle.swift */,
+			);
+			path = LunaLogWidget;
+			sourceTree = "<group>";
+		};
+		4D126B3E15805EADC23D26C8 = {
+			isa = PBXGroup;
+			children = (
+				AA0842BB82391B036D0964E1 /* LunaLog */,
+				4C177CD908A4E595A19DB83C /* LunaLogWidget */,
+				969CCD1ED4965F69595F1413 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8CE5DBC22752251A3FFFDD12 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				90F48D4E415FC3B5A3284902 /* AddPeriodView.swift */,
+				B2A9AD86436E2244BFC80623 /* CalendarView.swift */,
+				827C843E16291DED325C19AA /* ChatView.swift */,
+				188295CBD3E397350B2057D1 /* DashboardView.swift */,
+				8515A46612D56F12E8CB037A /* HistoryView.swift */,
+				85A7821BC75BD4E53E12DF52 /* JournalView.swift */,
+				6D2295EE6558DB351D1F33DF /* SettingsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		969CCD1ED4965F69595F1413 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				ECA129CCB9D2A1A9ECBCA919 /* LunaLog.app */,
+				20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		AA0842BB82391B036D0964E1 /* LunaLog */ = {
+			isa = PBXGroup;
+			children = (
+				F1C9D5A507FA5E42817561FA /* Assets.xcassets */,
+				2A5AF4E80D4AB0FAE4F47CF6 /* LunaLog.entitlements */,
+				B7666DC918D770BB65585823 /* LunaLogApp.swift */,
+				F7559488380F7D1EB29E82BE /* Models */,
+				E5C49BBDE8CBE50F1991A471 /* Services */,
+				F1784C815A8D872304F21D9B /* ViewModels */,
+				8CE5DBC22752251A3FFFDD12 /* Views */,
+			);
+			path = LunaLog;
+			sourceTree = "<group>";
+		};
+		E5C49BBDE8CBE50F1991A471 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				763C113D36E9E61BA0431829 /* GeminiService.swift */,
+				4ABEBFBD879960D48C0F493F /* NotificationService.swift */,
+				58A1CC3B9795F35BE968BE55 /* StorageService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F1784C815A8D872304F21D9B /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EAB7F4D98E7901BBC67AD5B5 /* ChatViewModel.swift */,
+				01B0256EEA38597884FF9D42 /* CycleManager.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F7559488380F7D1EB29E82BE /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BEEF8C2EDE1457D0485314F1 /* Period.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4C045E7D124F0F63B6491F77 /* LunaLog */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 715478696E29B27BA5C70862 /* Build configuration list for PBXNativeTarget "LunaLog" */;
+			buildPhases = (
+				B969CE70F4A29F659957FC58 /* Sources */,
+				34EAECC482F7C036A51E3025 /* Resources */,
+				38BB0A0CDCE9CFEE004DE3B0 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2FC5C3248D6F4DDB9DAD11AB /* PBXTargetDependency */,
+			);
+			name = LunaLog;
+			packageProductDependencies = (
+			);
+			productName = LunaLog;
+			productReference = ECA129CCB9D2A1A9ECBCA919 /* LunaLog.app */;
+			productType = "com.apple.product-type.application";
+		};
+		737E1B33D95BE4B362EF4337 /* LunaLogWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C4A0CB2FE9E1022320157F85 /* Build configuration list for PBXNativeTarget "LunaLogWidgetExtension" */;
+			buildPhases = (
+				68ABD2993F2F5B063CDA2A18 /* Sources */,
+				1103AC476002248B964D82F4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LunaLogWidgetExtension;
+			packageProductDependencies = (
+			);
+			productName = LunaLogWidgetExtension;
+			productReference = 20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EC69F52A5835D3937785AF0C /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1500;
+			};
+			buildConfigurationList = 3E626745F5BB7509E1116405 /* Build configuration list for PBXProject "LunaLog" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = tr;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				tr,
+			);
+			mainGroup = 4D126B3E15805EADC23D26C8;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4C045E7D124F0F63B6491F77 /* LunaLog */,
+				737E1B33D95BE4B362EF4337 /* LunaLogWidgetExtension */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1103AC476002248B964D82F4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD3DFCFD6B5A2DB9F4A26AAD /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34EAECC482F7C036A51E3025 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5AF95C018B4FA260E7D74E0A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		68ABD2993F2F5B063CDA2A18 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AEE7AAC4EEF81780E99DAE7F /* LunaLogWidget.swift in Sources */,
+				23EB8E7A0B989FD8334AAAFA /* LunaLogWidgetBundle.swift in Sources */,
+				06B2A44EC0677E0C2F417019 /* Period.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B969CE70F4A29F659957FC58 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4AD0B3FB7E34F88E0D4B5CC /* AddPeriodView.swift in Sources */,
+				8857D3F7B6A013B1BB15FEBC /* CalendarView.swift in Sources */,
+				60CAAB34DEFEFF8DE12EE05B /* ChatView.swift in Sources */,
+				1C226BAED1C005958A367106 /* ChatViewModel.swift in Sources */,
+				4866E106BF3613A014BFCF2E /* CycleManager.swift in Sources */,
+				8C60DC4984112D4307392706 /* DashboardView.swift in Sources */,
+				CD75A1AEBEB899CE1ABD438D /* GeminiService.swift in Sources */,
+				085983DE58883F8142AEE905 /* HistoryView.swift in Sources */,
+				C44EFDC2A45A2B096480FBB7 /* JournalView.swift in Sources */,
+				A104838000D65C7124238909 /* LunaLogApp.swift in Sources */,
+				4A77FF65C41F429599618407 /* NotificationService.swift in Sources */,
+				6146E8B96C151EFDFB853556 /* Period.swift in Sources */,
+				D7BD20163AEF0C63877EC538 /* SettingsView.swift in Sources */,
+				26ABEDCD90E0A677ECDBC360 /* StorageService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		2FC5C3248D6F4DDB9DAD11AB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 737E1B33D95BE4B362EF4337 /* LunaLogWidgetExtension */;
+			targetProxy = F62E90778D328A457095C02F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		14DB024762345F8F77FFA022 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LunaLog/LunaLog.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LunaLog;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seros.LunaLog;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		1B2FAE033BBF6885C045CB9A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		268B7D2FBD987A39A4BC70BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LunaLogWidget/LunaLogWidget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LunaLogWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seros.LunaLog.Widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		9F937833E3B8DE90D1BE465E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		B8D47815D5C333CE86266774 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LunaLog/LunaLog.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = LunaLog;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seros.LunaLog;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FAF316A37404DF8B26A90C72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LunaLogWidget/LunaLogWidget.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = LunaLogWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.seros.LunaLog.Widget;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3E626745F5BB7509E1116405 /* Build configuration list for PBXProject "LunaLog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B2FAE033BBF6885C045CB9A /* Debug */,
+				9F937833E3B8DE90D1BE465E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		715478696E29B27BA5C70862 /* Build configuration list for PBXNativeTarget "LunaLog" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B8D47815D5C333CE86266774 /* Debug */,
+				14DB024762345F8F77FFA022 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C4A0CB2FE9E1022320157F85 /* Build configuration list for PBXNativeTarget "LunaLogWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				268B7D2FBD987A39A4BC70BA /* Debug */,
+				FAF316A37404DF8B26A90C72 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EC69F52A5835D3937785AF0C /* Project object */;
+}
