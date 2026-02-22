@@ -9,53 +9,38 @@ struct ChatView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                chatContent
+                if viewModel.isReady {
+                    chatContent
+                } else {
+                    Spacer()
+                    ProgressView()
+                        .tint(cycleManager.accentColor)
+                    Spacer()
+                }
+            }
+            .background(Color(.systemBackground).ignoresSafeArea())
+            .onAppear {
+                viewModel.loadMessages()
             }
             .navigationTitle("Asistan")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { viewModel.clearChat() }) {
-                        Image(systemName: "trash")
-                            .foregroundColor(.pink)
+                        Image(systemName: "arrow.counterclockwise.circle")
+                            .font(.title3)
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundColor(cycleManager.accentColor)
                     }
                 }
             }
         }
     }
 
-    private var apiKeyWarning: some View {
-        VStack(spacing: 20) {
-            Spacer()
-
-            Image(systemName: "key.fill")
-                .font(.system(size: 60))
-                .foregroundColor(.pink.opacity(0.5))
-
-            Text("API Anahtarı Gerekli")
-                .font(.title2)
-                .fontWeight(.bold)
-
-            Text("Chatbot'u kullanmak için Ayarlar'dan\nGemini API anahtarını girmen gerekiyor.")
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-
-            Text("google aistudio.google.com adresinden\nücretsiz API anahtarı alabilirsin.")
-                .font(.caption)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
-
-            Spacer()
-        }
-        .padding()
-    }
-
     private var chatContent: some View {
         VStack(spacing: 0) {
-            // Mesaj listesi
             ScrollViewReader { proxy in
                 ScrollView {
-                    LazyVStack(spacing: 12) {
+                    LazyVStack(spacing: 16) {
                         ForEach(viewModel.messages) { message in
                             messageBubble(message)
                                 .id(message.id)
@@ -71,131 +56,162 @@ struct ChatView: View {
                                 .id("error")
                         }
                     }
-                    .padding()
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
                 }
-                .onChange(of: viewModel.messages.count) { _ in
-                    withAnimation {
-                        proxy.scrollTo(viewModel.messages.last?.id, anchor: .bottom)
+                .scrollDismissesKeyboard(.interactively)
+                .onChange(of: viewModel.messages.count) { _, _ in
+                    if let lastID = viewModel.messages.last?.id {
+                        withAnimation(.easeOut(duration: 0.3)) {
+                            proxy.scrollTo(lastID, anchor: .bottom)
+                        }
                     }
                 }
-                .onChange(of: viewModel.isLoading) { loading in
+                .onChange(of: viewModel.isLoading) { _, loading in
                     if loading {
-                        withAnimation {
+                        withAnimation(.easeOut(duration: 0.3)) {
                             proxy.scrollTo("typing", anchor: .bottom)
                         }
                     }
                 }
             }
 
-            Divider()
-
-            // Mesaj giriş alanı
             messageInputBar
         }
     }
 
     private func messageBubble(_ message: ChatMessage) -> some View {
-        HStack {
-            if message.isUser { Spacer() }
+        HStack(alignment: .bottom, spacing: 8) {
+            if message.isUser { Spacer(minLength: 48) }
+
+            if !message.isUser {
+                Circle()
+                    .fill(
+                        LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+                    .frame(width: 28, height: 28)
+                    .overlay(
+                        Image(systemName: "sparkle")
+                            .font(.system(size: 13, weight: .semibold))
+                            .foregroundColor(.white)
+                    )
+            }
 
             VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
                 Text(message.content)
                     .font(.body)
                     .foregroundColor(message.isUser ? .white : .primary)
-                    .padding(.horizontal, 14)
-                    .padding(.vertical, 10)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
                     .background(
                         Group {
                             if message.isUser {
-                                LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
+                                LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                             } else {
-                                LinearGradient(colors: [Color(.systemGray6), Color(.systemGray6)], startPoint: .leading, endPoint: .trailing)
+                                Color(.systemBackground)
                             }
                         }
                     )
-                    .cornerRadius(18)
+                    .cornerRadius(20)
+                    .if(!message.isUser) { view in
+                        view.shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 2)
+                    }
 
                 Text(formatTime(message.date))
                     .font(.caption2)
                     .foregroundColor(.secondary)
+                    .padding(.horizontal, 4)
             }
 
-            if !message.isUser { Spacer() }
+            if !message.isUser { Spacer(minLength: 48) }
         }
     }
 
     private var typingIndicator: some View {
-        HStack {
-            HStack(spacing: 4) {
-                ForEach(0..<3) { i in
-                    Circle()
-                        .fill(Color.gray)
-                        .frame(width: 8, height: 8)
-                        .opacity(0.5)
-                }
+        HStack(alignment: .bottom, spacing: 8) {
+            Circle()
+                .fill(
+                    LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                )
+                .frame(width: 28, height: 28)
+                .overlay(
+                    Image(systemName: "sparkle")
+                        .font(.system(size: 13, weight: .semibold))
+                        .foregroundColor(.white)
+                )
+
+            HStack(spacing: 5) {
+                TypingDot(delay: 0)
+                TypingDot(delay: 0.2)
+                TypingDot(delay: 0.4)
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Color(.systemGray6))
-            .cornerRadius(18)
+            .padding(.horizontal, 18)
+            .padding(.vertical, 14)
+            .background(Color(.systemBackground))
+            .cornerRadius(20)
+            .shadow(color: .black.opacity(0.04), radius: 4, x: 0, y: 2)
 
             Spacer()
         }
     }
 
     private func errorBubble(_ error: String) -> some View {
-        HStack {
-            HStack(spacing: 8) {
-                Image(systemName: "exclamationmark.triangle.fill")
-                    .foregroundColor(.orange)
-                Text(error)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-            }
-            .padding(.horizontal, 14)
-            .padding(.vertical, 10)
-            .background(Color.orange.opacity(0.1))
-            .cornerRadius(12)
+        HStack(spacing: 10) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundColor(.orange)
 
-            Spacer()
+            Text(error)
+                .font(.caption)
+                .foregroundColor(.secondary)
         }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .background(Color.orange.opacity(0.08))
+        .cornerRadius(14)
+        .padding(.horizontal, 4)
     }
 
     private var messageInputBar: some View {
-        HStack(spacing: 12) {
-            TextField("Mesajını yaz...", text: $messageText, axis: .vertical)
-                .textFieldStyle(.plain)
-                .lineLimit(1...5)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
-                .background(Color(.systemGray6))
-                .cornerRadius(20)
-                .focused($isTextFieldFocused)
+        VStack(spacing: 0) {
+            Divider()
 
-            Button(action: sendMessage) {
-                Image(systemName: "arrow.up.circle.fill")
-                    .font(.system(size: 34))
-                    .foregroundStyle(
-                        LinearGradient(
-                            colors: messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading
-                                ? [.gray, .gray]
-                                : [.pink, .purple],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
+            HStack(alignment: .bottom, spacing: 12) {
+                TextField("Mesajını yaz...", text: $messageText, axis: .vertical)
+                    .textFieldStyle(.plain)
+                    .lineLimit(1...5)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 12)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(22)
+                    .focused($isTextFieldFocused)
+
+                Button(action: sendMessage) {
+                    Image(systemName: "arrow.up.circle.fill")
+                        .font(.system(size: 36))
+                        .symbolRenderingMode(.hierarchical)
+                        .foregroundStyle(
+                            LinearGradient(
+                                colors: messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading
+                                    ? [.gray, .gray]
+                                    : cycleManager.accentGradient,
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
                         )
-                    )
+                }
+                .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading)
             }
-            .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || viewModel.isLoading)
+            .padding(.horizontal, 16)
+            .padding(.vertical, 10)
+            .background(Color(.systemBackground))
         }
-        .padding(.horizontal)
-        .padding(.vertical, 8)
-        .background(Color(.systemBackground))
     }
 
     private func sendMessage() {
         let text = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !text.isEmpty else { return }
         messageText = ""
+        isTextFieldFocused = false
         viewModel.sendMessage(text, cycleManager: cycleManager)
     }
 
@@ -204,6 +220,39 @@ struct ChatView: View {
         formatter.locale = Locale(identifier: "tr_TR")
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: date)
+    }
+}
+
+// MARK: - Typing Animation Dot
+struct TypingDot: View {
+    let delay: Double
+    @State private var animate = false
+
+    var body: some View {
+        Circle()
+            .fill(Color.gray.opacity(0.5))
+            .frame(width: 8, height: 8)
+            .scaleEffect(animate ? 1.0 : 0.5)
+            .opacity(animate ? 1.0 : 0.4)
+            .animation(
+                .easeInOut(duration: 0.6)
+                .repeatForever(autoreverses: true)
+                .delay(delay),
+                value: animate
+            )
+            .onAppear { animate = true }
+    }
+}
+
+// MARK: - Conditional Modifier
+extension View {
+    @ViewBuilder
+    func `if`<Transform: View>(_ condition: Bool, transform: (Self) -> Transform) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
     }
 }
 

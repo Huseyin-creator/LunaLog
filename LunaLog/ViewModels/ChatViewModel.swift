@@ -5,19 +5,24 @@ class ChatViewModel: ObservableObject {
     @Published var messages: [ChatMessage] = []
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var isReady = false
 
     private let storage = StorageService.shared
 
-    init() {
-        messages = storage.loadChatMessages()
-        if messages.isEmpty {
+    func loadMessages() {
+        guard !isReady else { return }
+        let loaded = storage.loadChatMessages()
+        if loaded.isEmpty {
             let welcome = ChatMessage(
-                content: "Merhaba! Ben döngü asistanın. Regl döngün, belirtilerin veya kadın sağlığı hakkında sorularını yanıtlayabilirim. Nasıl yardımcı olabilirim?",
+                content: "Merhaba! Ben Luna, kadın sağlığı asistanın. Regl döngün, belirtilerin veya kadın sağlığı hakkında sorularını yanıtlayabilirim. Nasıl yardımcı olabilirim?",
                 isUser: false
             )
-            messages.append(welcome)
+            messages = [welcome]
             storage.saveChatMessages(messages)
+        } else {
+            messages = loaded
         }
+        isReady = true
     }
 
     func sendMessage(_ text: String, cycleManager: CycleManager) {
@@ -52,7 +57,7 @@ class ChatViewModel: ObservableObject {
     func clearChat() {
         messages.removeAll()
         let welcome = ChatMessage(
-            content: "Merhaba! Ben döngü asistanın. Regl döngün, belirtilerin veya kadın sağlığı hakkında sorularını yanıtlayabilirim. Nasıl yardımcı olabilirim?",
+            content: "Merhaba! Ben Luna, kadın sağlığı asistanın. Regl döngün, belirtilerin veya kadın sağlığı hakkında sorularını yanıtlayabilirim. Nasıl yardımcı olabilirim?",
             isUser: false
         )
         messages.append(welcome)
@@ -92,7 +97,6 @@ class ChatViewModel: ObservableObject {
             context += "Tahmini yumurtlama: \(cm.formatDate(ovulation))\n"
         }
 
-        // Son günlük kayıtları
         let recentJournals = cm.journalEntries.prefix(3)
         if !recentJournals.isEmpty {
             context += "\nSon günlük kayıtları:\n"

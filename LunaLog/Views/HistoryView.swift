@@ -51,6 +51,7 @@ struct HistoryView: View {
             .sheet(isPresented: $showEditSheet) {
                 if let period = selectedPeriod {
                     EditPeriodView(period: period)
+                        .environmentObject(cycleManager)
                 }
             }
             .alert("Kaydı Sil", isPresented: $showDeleteAlert) {
@@ -73,7 +74,7 @@ struct HistoryView: View {
         VStack(spacing: 16) {
             Image(systemName: "calendar.badge.plus")
                 .font(.system(size: 60))
-                .foregroundColor(.pink.opacity(0.5))
+                .foregroundColor(cycleManager.accentColor.opacity(0.5))
 
             Text("Henüz kayıt yok")
                 .font(.title2)
@@ -92,7 +93,7 @@ struct HistoryView: View {
         VStack(spacing: 16) {
             HStack {
                 Image(systemName: "chart.bar.fill")
-                    .foregroundColor(.pink)
+                    .foregroundColor(cycleManager.accentColor)
                 Text("İstatistikler")
                     .font(.headline)
                 Spacer()
@@ -151,7 +152,7 @@ struct HistoryView: View {
         VStack(spacing: 4) {
             Text(value)
                 .font(.system(size: 24, weight: .bold, design: .rounded))
-                .foregroundColor(.pink)
+                .foregroundColor(cycleManager.accentColor)
             Text(label)
                 .font(.caption2)
                 .foregroundColor(.secondary)
@@ -190,8 +191,8 @@ struct HistoryView: View {
                         .fontWeight(.medium)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
-                        .background(Color.pink.opacity(0.1))
-                        .foregroundColor(.pink)
+                        .background(cycleManager.accentColor.opacity(0.1))
+                        .foregroundColor(cycleManager.accentColor)
                         .cornerRadius(8)
                 } else {
                     Text("Devam ediyor")

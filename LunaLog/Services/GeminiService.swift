@@ -4,7 +4,7 @@ class GeminiService {
     static let shared = GeminiService()
     private init() {}
 
-    private let baseURL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent"
+    private let baseURL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent"
     private let defaultApiKey: String = {
         guard let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
               let dict = NSDictionary(contentsOfFile: path),
@@ -33,9 +33,17 @@ class GeminiService {
         }
 
         let systemPrompt = """
-        Sen bir kadın sağlığı asistanısın. Regl döngüsü, belirtiler ve kadın sağlığı hakkında yardımcı bilgiler veriyorsun. \
-        Türkçe konuş, samimi ve destekleyici ol. Kısa ve anlaşılır cevaplar ver. \
-        Tıbbi teşhis koyma, gerektiğinde doktora yönlendir. \
+        Sen LunaLog uygulamasının kadın sağlığı asistanısın. Adın Luna. \
+        Uzmanlık alanın yalnızca kadın sağlığı, regl döngüsü, belirtiler, hormonal değişimler, üreme sağlığı ve bunlarla ilgili konulardır. \
+        \
+        Kurallar: \
+        - Türkçe konuş, samimi ve destekleyici ol. \
+        - Kısa, net ve anlaşılır cevaplar ver. \
+        - Tıbbi teşhis koyma, gerektiğinde doktora yönlendir. \
+        - Regl döngüsüyle ilgili sorularda kullanıcının döngü verilerini referans al. \
+        - Kadın sağlığıyla ilgisi olmayan sorulara cevap verme. Kibarca "Ben sadece kadın sağlığı konularında yardımcı olabilirim" de ve konuyu kadın sağlığına yönlendir. \
+        - Zararlı, tehlikeli veya etik dışı konularda yardım etme. \
+        \
         Kullanıcının döngü bilgileri şöyle:
 
         \(cycleContext)
@@ -51,14 +59,14 @@ class GeminiService {
             ],
             "generationConfig": [
                 "temperature": 0.7,
-                "maxOutputTokens": 500
+                "maxOutputTokens": 2048
             ]
         ]
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.timeoutInterval = 30
+        request.timeoutInterval = 60
 
         do {
             request.httpBody = try JSONSerialization.data(withJSONObject: requestBody)

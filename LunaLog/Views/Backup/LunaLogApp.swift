@@ -38,19 +38,19 @@ struct ContentView: View {
                     Label("Ana Sayfa", systemImage: "heart.fill")
                 }
 
-            CycleCalendarView()
+            JournalView()
                 .tabItem {
-                    Label("Takvim", systemImage: "calendar")
+                    Label("Günlük", systemImage: "book.fill")
                 }
 
             ChatView()
                 .tabItem {
-                    Label("Luna", systemImage: "sparkle")
+                    Label("Asistan", systemImage: "bubble.left.fill")
                 }
 
-            JournalView()
+            CycleCalendarView()
                 .tabItem {
-                    Label("Günlük", systemImage: "book.fill")
+                    Label("Takvim", systemImage: "calendar")
                 }
 
             SettingsView()
@@ -58,7 +58,7 @@ struct ContentView: View {
                     Label("Ayarlar", systemImage: "gearshape.fill")
                 }
         }
-        .tint(cycleManager.accentColor)
+        .tint(.pink)
         .onTapGesture {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }

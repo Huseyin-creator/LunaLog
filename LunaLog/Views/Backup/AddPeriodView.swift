@@ -41,8 +41,7 @@ struct AddPeriodView: View {
                         ForEach(Symptom.allCases) { symptom in
                             SymptomChip(
                                 symptom: symptom,
-                                isSelected: selectedSymptoms.contains(symptom),
-                                accentColor: cycleManager.accentColor
+                                isSelected: selectedSymptoms.contains(symptom)
                             ) {
                                 if selectedSymptoms.contains(symptom) {
                                     selectedSymptoms.remove(symptom)
@@ -72,7 +71,7 @@ struct AddPeriodView: View {
                         saveRecord()
                     }
                     .fontWeight(.bold)
-                    .foregroundColor(cycleManager.accentColor)
+                    .foregroundColor(.pink)
                 }
             }
         }
@@ -93,7 +92,6 @@ struct AddPeriodView: View {
 struct SymptomChip: View {
     let symptom: Symptom
     let isSelected: Bool
-    var accentColor: Color = .pink
     let action: () -> Void
 
     var body: some View {
@@ -108,12 +106,12 @@ struct SymptomChip: View {
             .padding(.horizontal, 10)
             .padding(.vertical, 8)
             .frame(maxWidth: .infinity)
-            .background(isSelected ? accentColor.opacity(0.2) : Color(.systemGray6))
-            .foregroundColor(isSelected ? accentColor : .primary)
+            .background(isSelected ? Color.pink.opacity(0.2) : Color(.systemGray6))
+            .foregroundColor(isSelected ? .pink : .primary)
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(isSelected ? accentColor : Color.clear, lineWidth: 1.5)
+                    .stroke(isSelected ? Color.pink : Color.clear, lineWidth: 1.5)
             )
         }
         .buttonStyle(.plain)
@@ -171,8 +169,7 @@ struct EditPeriodView: View {
                         ForEach(Symptom.allCases) { symptom in
                             SymptomChip(
                                 symptom: symptom,
-                                isSelected: selectedSymptoms.contains(symptom),
-                                accentColor: cycleManager.accentColor
+                                isSelected: selectedSymptoms.contains(symptom)
                             ) {
                                 if selectedSymptoms.contains(symptom) {
                                     selectedSymptoms.remove(symptom)
@@ -207,7 +204,7 @@ struct EditPeriodView: View {
                         dismiss()
                     }
                     .fontWeight(.bold)
-                    .foregroundColor(cycleManager.accentColor)
+                    .foregroundColor(.pink)
                 }
             }
         }
@@ -250,7 +247,7 @@ struct EndPeriodView: View {
                 )
                 .datePickerStyle(.graphical)
                 .environment(\.locale, Locale(identifier: "tr_TR"))
-                .tint(cycleManager.accentColor)
+                .tint(.pink)
 
                 Button(action: save) {
                     HStack {
@@ -262,7 +259,7 @@ struct EndPeriodView: View {
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 14)
                     .background(
-                        LinearGradient(colors: cycleManager.accentGradient, startPoint: .leading, endPoint: .trailing)
+                        LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
                     )
                     .cornerRadius(14)
                 }

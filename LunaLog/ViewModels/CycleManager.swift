@@ -11,6 +11,9 @@ class CycleManager: ObservableObject {
     private let storage = StorageService.shared
     private let calendar = Calendar.current
 
+    var accentColor: Color { settings.accentColor.color }
+    var accentGradient: [Color] { settings.accentColor.gradientColors }
+
     init() {
         self.settings = StorageService.shared.loadSettings()
         self.periods = StorageService.shared.loadPeriods()
@@ -52,6 +55,11 @@ class CycleManager: ObservableObject {
         updateCurrentPhase()
         scheduleNotificationsIfNeeded()
         WidgetCenter.shared.reloadAllTimelines()
+    }
+
+    /// Sadece gorunum ayarlarini kaydeder (tema, API key gibi donguyü etkilemeyen ayarlar)
+    func saveAppearanceSettings() {
+        storage.saveSettings(settings)
     }
 
     // MARK: - Günlük CRUD

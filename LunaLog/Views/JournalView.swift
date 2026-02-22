@@ -3,6 +3,10 @@ import SwiftUI
 struct JournalView: View {
     @EnvironmentObject var cycleManager: CycleManager
     @State private var showAddEntry = false
+    @State private var detailEntry: JournalEntry?
+    @State private var editingEntry: JournalEntry?
+    @State private var showDeleteAlert = false
+    @State private var entryToDelete: JournalEntry?
 
     var body: some View {
         NavigationView {
@@ -13,54 +17,93 @@ struct JournalView: View {
                     journalList
                 }
             }
+            .background(Color(.systemBackground).ignoresSafeArea())
             .navigationTitle("Günlük")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showAddEntry = true }) {
                         Image(systemName: "plus.circle.fill")
                             .font(.title2)
-                            .foregroundColor(.pink)
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundColor(cycleManager.accentColor)
                     }
                 }
             }
             .sheet(isPresented: $showAddEntry) {
                 AddJournalEntryView()
+                    .environmentObject(cycleManager)
+            }
+            .sheet(item: $detailEntry) { entry in
+                JournalDetailSheet(entry: entry, onEdit: {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        editingEntry = entry
+                    }
+                })
+                    .environmentObject(cycleManager)
+            }
+            .sheet(item: $editingEntry) { entry in
+                EditJournalEntryView(entry: entry)
+                    .environmentObject(cycleManager)
+            }
+            .alert("Kaydı Sil", isPresented: $showDeleteAlert) {
+                Button("İptal", role: .cancel) {}
+                Button("Sil", role: .destructive) {
+                    if let entry = entryToDelete {
+                        withAnimation {
+                            cycleManager.deleteJournalEntry(entry)
+                        }
+                    }
+                }
+            } message: {
+                Text("Bu günlük kaydını silmek istediğinizden emin misiniz?")
             }
         }
     }
 
     private var emptyState: some View {
-        VStack(spacing: 24) {
+        VStack(spacing: 28) {
             Spacer()
 
-            Image(systemName: "book.closed")
-                .font(.system(size: 80))
-                .foregroundStyle(
-                    LinearGradient(colors: [.pink, .purple], startPoint: .topLeading, endPoint: .bottomTrailing)
-                )
+            ZStack {
+                Circle()
+                    .fill(
+                        LinearGradient(colors: [cycleManager.accentGradient[0].opacity(0.12), cycleManager.accentGradient[1].opacity(0.08)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+                    .frame(width: 130, height: 130)
 
-            Text("Günlüğün Boş")
-                .font(.largeTitle)
-                .fontWeight(.bold)
+                Image(systemName: "book.closed.fill")
+                    .font(.system(size: 52))
+                    .symbolRenderingMode(.hierarchical)
+                    .foregroundStyle(
+                        LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                    )
+            }
 
-            Text("Her gün ruh halini ve notlarını\nkaydetmeye başla")
-                .font(.body)
-                .foregroundColor(.secondary)
-                .multilineTextAlignment(.center)
+            VStack(spacing: 10) {
+                Text("Günlüğün Boş")
+                    .font(.title2)
+                    .fontWeight(.bold)
+
+                Text("Her gün ruh halini ve notlarını\nkaydetmeye başla")
+                    .font(.body)
+                    .foregroundColor(.secondary)
+                    .multilineTextAlignment(.center)
+            }
 
             Button(action: { showAddEntry = true }) {
-                HStack {
+                HStack(spacing: 8) {
                     Image(systemName: "plus.circle.fill")
                     Text("İlk Kaydını Ekle")
                 }
                 .font(.headline)
                 .foregroundColor(.white)
-                .padding(.horizontal, 32)
-                .padding(.vertical, 14)
+                .padding(.horizontal, 36)
+                .padding(.vertical, 16)
                 .background(
-                    LinearGradient(colors: [.pink, .purple], startPoint: .leading, endPoint: .trailing)
+                    Capsule()
+                        .fill(LinearGradient(colors: cycleManager.accentGradient, startPoint: .leading, endPoint: .trailing))
                 )
-                .cornerRadius(16)
+                .shadow(color: cycleManager.accentColor.opacity(0.3), radius: 12, x: 0, y: 6)
             }
 
             Spacer()
@@ -71,20 +114,43 @@ struct JournalView: View {
     private var journalList: some View {
         List {
             ForEach(cycleManager.journalEntries) { entry in
-                journalRow(entry)
+                Button {
+                    detailEntry = entry
+                } label: {
+                    journalCard(entry)
+                }
+                .buttonStyle(.plain)
+                .swipeActions(edge: .trailing) {
+                        Button(role: .destructive) {
+                            entryToDelete = entry
+                            showDeleteAlert = true
+                        } label: {
+                            Label("Sil", systemImage: "trash")
+                        }
+                    }
+                    .swipeActions(edge: .leading) {
+                        Button {
+                            editingEntry = entry
+                        } label: {
+                            Label("Düzenle", systemImage: "pencil")
+                        }
+                        .tint(cycleManager.accentColor)
+                    }
+                    .listRowInsets(EdgeInsets(top: 7, leading: 20, bottom: 7, trailing: 20))
+                    .listRowSeparator(.hidden)
+                    .listRowBackground(Color.clear)
             }
-            .onDelete(perform: deleteEntry)
         }
         .listStyle(.plain)
     }
 
-    private func journalRow(_ entry: JournalEntry) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack {
+    private func journalCard(_ entry: JournalEntry) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
                 Text(entry.mood.emoji)
-                    .font(.title)
+                    .font(.system(size: 36))
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 3) {
                     Text(entry.mood.rawValue)
                         .font(.headline)
                     Text(cycleManager.formatDate(entry.date))
@@ -97,6 +163,9 @@ struct JournalView: View {
                 if let phase = cycleManager.phaseForDate(entry.date) {
                     Text(phase.emoji)
                         .font(.title3)
+                        .padding(6)
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
                 }
             }
 
@@ -104,31 +173,150 @@ struct JournalView: View {
                 Text(entry.note)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
-                    .lineLimit(3)
+                    .lineLimit(2)
+                    .padding(.top, 2)
             }
 
             if !entry.symptoms.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
                         ForEach(entry.symptoms) { symptom in
-                            Text("\(symptom.emoji) \(symptom.rawValue)")
-                                .font(.caption2)
-                                .padding(.horizontal, 8)
-                                .padding(.vertical, 4)
-                                .background(Color.pink.opacity(0.1))
-                                .cornerRadius(8)
+                            HStack(spacing: 3) {
+                                Text(symptom.emoji)
+                                Text(symptom.rawValue)
+                            }
+                            .font(.caption2)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(cycleManager.accentColor.opacity(0.08))
+                            .cornerRadius(8)
                         }
                     }
                 }
             }
         }
-        .padding(.vertical, 4)
+        .padding(16)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(18)
     }
+}
 
-    private func deleteEntry(at offsets: IndexSet) {
-        for index in offsets {
-            cycleManager.deleteJournalEntry(cycleManager.journalEntries[index])
+// MARK: - Günlük Detay Pop-up
+struct JournalDetailSheet: View {
+    @EnvironmentObject var cycleManager: CycleManager
+    @Environment(\.dismiss) var dismiss
+    let entry: JournalEntry
+    var onEdit: (() -> Void)? = nil
+    var onDelete: (() -> Void)? = nil
+
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 20) {
+                    // Header
+                    HStack(spacing: 16) {
+                        Text(entry.mood.emoji)
+                            .font(.system(size: 52))
+
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text(entry.mood.rawValue)
+                                .font(.title2)
+                                .fontWeight(.bold)
+                            Text(cycleManager.formatDate(entry.date))
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+
+                            if let phase = cycleManager.phaseForDate(entry.date) {
+                                HStack(spacing: 4) {
+                                    Text(phase.emoji)
+                                    Text(phase.rawValue)
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                        }
+
+                        Spacer()
+                    }
+                    .padding(18)
+                    .background(Color(.secondarySystemBackground))
+                    .cornerRadius(18)
+
+                    // Note
+                    if !entry.note.isEmpty {
+                        VStack(alignment: .leading, spacing: 10) {
+                            HStack {
+                                Image(systemName: "note.text")
+                                    .foregroundColor(cycleManager.accentColor)
+                                Text("Not")
+                                    .font(.headline)
+                            }
+
+                            Text(entry.note)
+                                .font(.body)
+                                .foregroundColor(.primary)
+                        }
+                        .padding(18)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(18)
+                    }
+
+                    // Symptoms
+                    if !entry.symptoms.isEmpty {
+                        VStack(alignment: .leading, spacing: 12) {
+                            HStack {
+                                Image(systemName: "heart.text.square")
+                                    .foregroundColor(cycleManager.accentColor)
+                                Text("Belirtiler")
+                                    .font(.headline)
+                            }
+
+                            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 8) {
+                                ForEach(entry.symptoms) { symptom in
+                                    HStack(spacing: 6) {
+                                        Text(symptom.emoji)
+                                        Text(symptom.rawValue)
+                                            .font(.subheadline)
+                                    }
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 8)
+                                    .frame(maxWidth: .infinity)
+                                    .background(cycleManager.accentColor.opacity(0.08))
+                                    .cornerRadius(10)
+                                }
+                            }
+                        }
+                        .padding(18)
+                        .background(Color(.secondarySystemBackground))
+                        .cornerRadius(18)
+                    }
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+            }
+            .background(Color(.systemBackground).ignoresSafeArea())
+            .navigationTitle("Günlük Detayı")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    if let onEdit = onEdit {
+                        Button {
+                            dismiss()
+                            onEdit()
+                        } label: {
+                            Label("Duzenle", systemImage: "pencil")
+                        }
+                        .foregroundColor(cycleManager.accentColor)
+                    }
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Kapat") { dismiss() }
+                        .foregroundColor(cycleManager.accentColor)
+                }
+            }
         }
+        .presentationDetents([.medium, .large])
     }
 }
 
@@ -143,85 +331,16 @@ struct AddJournalEntryView: View {
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(header: Text("Nasıl Hissediyorsun?")) {
-                    LazyVGrid(columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible()),
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
-                    ], spacing: 12) {
-                        ForEach(Mood.allCases, id: \.self) { mood in
-                            VStack(spacing: 4) {
-                                Text(mood.emoji)
-                                    .font(.system(size: 32))
-                                Text(mood.rawValue)
-                                    .font(.caption2)
-                                    .foregroundColor(selectedMood == mood ? .pink : .secondary)
-                            }
-                            .padding(8)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(selectedMood == mood ? Color.pink.opacity(0.15) : Color.clear)
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .stroke(selectedMood == mood ? Color.pink : Color.clear, lineWidth: 2)
-                            )
-                            .onTapGesture {
-                                selectedMood = mood
-                            }
-                        }
-                    }
-                    .padding(.vertical, 4)
-                }
-
-                Section(header: Text("Belirtiler")) {
-                    LazyVGrid(columns: [
-                        GridItem(.flexible()),
-                        GridItem(.flexible())
-                    ], spacing: 8) {
-                        ForEach(Symptom.allCases) { symptom in
-                            HStack {
-                                Text(symptom.emoji)
-                                Text(symptom.rawValue)
-                                    .font(.caption)
-                            }
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 8)
-                            .frame(maxWidth: .infinity)
-                            .background(
-                                selectedSymptoms.contains(symptom)
-                                    ? Color.pink.opacity(0.15)
-                                    : Color(.systemGray6)
-                            )
-                            .cornerRadius(10)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(selectedSymptoms.contains(symptom) ? Color.pink : Color.clear, lineWidth: 1.5)
-                            )
-                            .onTapGesture {
-                                if selectedSymptoms.contains(symptom) {
-                                    selectedSymptoms.remove(symptom)
-                                } else {
-                                    selectedSymptoms.insert(symptom)
-                                }
-                            }
-                        }
-                    }
-                    .padding(.vertical, 4)
-                }
-
-                Section(header: Text("Not")) {
-                    TextEditor(text: $note)
-                        .frame(minHeight: 100)
-                }
+            ScrollView {
+                journalForm
             }
+            .background(Color(.systemBackground).ignoresSafeArea())
             .navigationTitle("Günlük Ekle")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Vazgeç") { dismiss() }
+                        .foregroundColor(.secondary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("Kaydet") {
@@ -235,10 +354,297 @@ struct AddJournalEntryView: View {
                         dismiss()
                     }
                     .fontWeight(.bold)
-                    .foregroundColor(.pink)
+                    .foregroundColor(cycleManager.accentColor)
                 }
             }
         }
+    }
+
+    private var journalForm: some View {
+        VStack(spacing: 24) {
+            moodSection
+            noteSection
+            symptomsSection
+        }
+        .padding(.horizontal, 20)
+        .padding(.vertical, 12)
+    }
+
+    private var moodSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Nasıl Hissediyorsun?")
+                .font(.headline)
+                .padding(.horizontal, 4)
+
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 12) {
+                ForEach(Mood.allCases, id: \.self) { mood in
+                    VStack(spacing: 6) {
+                        Text(mood.emoji)
+                            .font(.system(size: 32))
+                        Text(mood.rawValue)
+                            .font(.caption2)
+                            .foregroundColor(selectedMood == mood ? cycleManager.accentColor : .secondary)
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14)
+                            .fill(selectedMood == mood ? cycleManager.accentColor.opacity(0.12) : Color(.systemGray6))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(selectedMood == mood ? cycleManager.accentColor : Color.clear, lineWidth: 2)
+                    )
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            selectedMood = mood
+                        }
+                    }
+                }
+            }
+        }
+        .padding(18)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(18)
+    }
+
+    private var symptomsSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Belirtiler")
+                .font(.headline)
+                .padding(.horizontal, 4)
+
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 10) {
+                ForEach(Symptom.allCases) { symptom in
+                    HStack(spacing: 5) {
+                        Text(symptom.emoji)
+                        Text(symptom.rawValue)
+                            .font(.caption)
+                            .lineLimit(1)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        selectedSymptoms.contains(symptom)
+                            ? cycleManager.accentColor.opacity(0.12)
+                            : Color(.systemGray6)
+                    )
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedSymptoms.contains(symptom) ? cycleManager.accentColor : Color.clear, lineWidth: 1.5)
+                    )
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            if selectedSymptoms.contains(symptom) {
+                                selectedSymptoms.remove(symptom)
+                            } else {
+                                selectedSymptoms.insert(symptom)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .padding(18)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(18)
+    }
+
+    private var noteSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Not")
+                .font(.headline)
+                .padding(.horizontal, 4)
+
+            TextEditor(text: $note)
+                .frame(minHeight: 100)
+                .scrollContentBackground(.hidden)
+                .padding(12)
+                .background(Color(.tertiarySystemBackground))
+                .cornerRadius(14)
+        }
+        .padding(18)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(18)
+    }
+}
+
+// MARK: - Günlük Kaydı Düzenleme
+struct EditJournalEntryView: View {
+    @EnvironmentObject var cycleManager: CycleManager
+    @Environment(\.dismiss) var dismiss
+
+    let entry: JournalEntry
+
+    @State private var selectedMood: Mood
+    @State private var note: String
+    @State private var selectedSymptoms: Set<Symptom>
+
+    init(entry: JournalEntry) {
+        self.entry = entry
+        _selectedMood = State(initialValue: entry.mood)
+        _note = State(initialValue: entry.note)
+        _selectedSymptoms = State(initialValue: Set(entry.symptoms))
+    }
+
+    var body: some View {
+        NavigationView {
+            ScrollView {
+                VStack(spacing: 24) {
+                    moodSection
+                    noteSection
+                    symptomsSection
+                }
+                .padding(.horizontal, 20)
+                .padding(.vertical, 12)
+            }
+            .background(Color(.systemBackground).ignoresSafeArea())
+            .navigationTitle("Günlüğü Düzenle")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("Vazgeç") { dismiss() }
+                        .foregroundColor(.secondary)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Kaydet") {
+                        var updated = entry
+                        updated.mood = selectedMood
+                        updated.note = note
+                        updated.symptoms = Array(selectedSymptoms)
+                        cycleManager.updateJournalEntry(updated)
+                        dismiss()
+                    }
+                    .fontWeight(.bold)
+                    .foregroundColor(cycleManager.accentColor)
+                }
+            }
+        }
+    }
+
+    private var moodSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Nasıl Hissediyorsun?")
+                .font(.headline)
+                .padding(.horizontal, 4)
+
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 12) {
+                ForEach(Mood.allCases, id: \.self) { mood in
+                    VStack(spacing: 6) {
+                        Text(mood.emoji)
+                            .font(.system(size: 32))
+                        Text(mood.rawValue)
+                            .font(.caption2)
+                            .foregroundColor(selectedMood == mood ? cycleManager.accentColor : .secondary)
+                    }
+                    .padding(10)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        RoundedRectangle(cornerRadius: 14)
+                            .fill(selectedMood == mood ? cycleManager.accentColor.opacity(0.12) : Color(.systemGray6))
+                    )
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 14)
+                            .stroke(selectedMood == mood ? cycleManager.accentColor : Color.clear, lineWidth: 2)
+                    )
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            selectedMood = mood
+                        }
+                    }
+                }
+            }
+        }
+        .padding(18)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(18)
+    }
+
+    private var symptomsSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Belirtiler")
+                .font(.headline)
+                .padding(.horizontal, 4)
+
+            LazyVGrid(columns: [
+                GridItem(.flexible()),
+                GridItem(.flexible())
+            ], spacing: 10) {
+                ForEach(Symptom.allCases) { symptom in
+                    HStack(spacing: 5) {
+                        Text(symptom.emoji)
+                        Text(symptom.rawValue)
+                            .font(.caption)
+                            .lineLimit(1)
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity)
+                    .background(
+                        selectedSymptoms.contains(symptom)
+                            ? cycleManager.accentColor.opacity(0.12)
+                            : Color(.systemGray6)
+                    )
+                    .cornerRadius(12)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 12)
+                            .stroke(selectedSymptoms.contains(symptom) ? cycleManager.accentColor : Color.clear, lineWidth: 1.5)
+                    )
+                    .onTapGesture {
+                        withAnimation(.easeInOut(duration: 0.2)) {
+                            if selectedSymptoms.contains(symptom) {
+                                selectedSymptoms.remove(symptom)
+                            } else {
+                                selectedSymptoms.insert(symptom)
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .padding(18)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(18)
+    }
+
+    private var noteSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("Not")
+                .font(.headline)
+                .padding(.horizontal, 4)
+
+            TextEditor(text: $note)
+                .frame(minHeight: 100)
+                .scrollContentBackground(.hidden)
+                .padding(12)
+                .background(Color(.tertiarySystemBackground))
+                .cornerRadius(14)
+        }
+        .padding(18)
+        .background(Color(.secondarySystemBackground))
+        .cornerRadius(18)
+    }
+}
+
+// MARK: - JournalEntry mutability fix
+extension JournalEntry {
+    var mutableCopy: JournalEntry {
+        JournalEntry(id: id, date: date, mood: mood, note: note, symptoms: symptoms)
     }
 }
 
