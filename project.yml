@@ -46,6 +46,7 @@ targets:
         excludes:
           - Info.plist
       - path: LunaLog/Models/Period.swift
+      - path: LunaLog/Models/Strings.swift
     info:
       path: LunaLogWidget/Info.plist
       properties:

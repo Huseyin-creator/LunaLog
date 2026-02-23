@@ -25,6 +25,7 @@
 		C44EFDC2A45A2B096480FBB7 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7821BC75BD4E53E12DF52 /* JournalView.swift */; };
 		CD3DFCFD6B5A2DB9F4A26AAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6A6720DEA4FB541A46579B /* Assets.xcassets */; };
 		CD75A1AEBEB899CE1ABD438D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C113D36E9E61BA0431829 /* GeminiService.swift */; };
+		D166AE1106A3191C216C9EC3 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9265244940DD18CA733900 /* Strings.swift */; };
 		D7BD20163AEF0C63877EC538 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D2295EE6558DB351D1F33DF /* SettingsView.swift */; };
 		E7346C59DEF64687B40CB775 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1D2F811799F7986C58CF91DD /* Secrets.plist */; };
 		F4AD0B3FB7E34F88E0D4B5CC /* AddPeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90F48D4E415FC3B5A3284902 /* AddPeriodView.swift */; };
@@ -267,6 +268,7 @@
 				AEE7AAC4EEF81780E99DAE7F /* LunaLogWidget.swift in Sources */,
 				23EB8E7A0B989FD8334AAAFA /* LunaLogWidgetBundle.swift in Sources */,
 				06B2A44EC0677E0C2F417019 /* Period.swift in Sources */,
+				D166AE1106A3191C216C9EC3 /* Strings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
