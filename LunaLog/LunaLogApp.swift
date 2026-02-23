@@ -35,27 +35,27 @@ struct ContentView: View {
         TabView {
             DashboardView()
                 .tabItem {
-                    Label("Ana Sayfa", systemImage: "heart.fill")
+                    Label(S.tabHome, systemImage: "heart.fill")
                 }
 
             CycleCalendarView()
                 .tabItem {
-                    Label("Takvim", systemImage: "calendar")
+                    Label(S.tabCalendar, systemImage: "calendar")
                 }
 
             ChatView()
                 .tabItem {
-                    Label("Luna", systemImage: "sparkle")
+                    Label(S.tabLuna, systemImage: "sparkle")
                 }
 
             JournalView()
                 .tabItem {
-                    Label("Günlük", systemImage: "book.fill")
+                    Label(S.tabJournal, systemImage: "book.fill")
                 }
 
             SettingsView()
                 .tabItem {
-                    Label("Ayarlar", systemImage: "gearshape.fill")
+                    Label(S.tabSettings, systemImage: "gearshape.fill")
                 }
         }
         .tint(cycleManager.accentColor)

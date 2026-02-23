@@ -96,7 +96,7 @@ struct DashboardView: View {
                                 LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                             )
 
-                        Text("İlk Kaydını\nEkle")
+                        Text(S.addFirstRecord)
                             .font(.system(size: 16, weight: .semibold))
                             .multilineTextAlignment(.center)
                             .foregroundColor(cycleManager.accentColor)
@@ -106,11 +106,11 @@ struct DashboardView: View {
             .buttonStyle(.plain)
 
             VStack(spacing: 10) {
-                Text("Merhaba!")
+                Text(S.emptyHello)
                     .font(.largeTitle)
                     .fontWeight(.bold)
 
-                Text("Döngünü takip etmeye başlamak için\nyukarıdaki butona dokun")
+                Text(S.emptyDescription)
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -129,7 +129,7 @@ struct DashboardView: View {
                     Text(cycleManager.currentPhase.emoji)
                         .font(.system(size: 36))
 
-                    Text(cycleManager.currentPhase.rawValue)
+                    Text(cycleManager.currentPhase.displayName)
                         .font(.title3)
                         .fontWeight(.bold)
                         .foregroundColor(.white)
@@ -151,7 +151,7 @@ struct DashboardView: View {
                 HStack {
                     Image(systemName: "drop.fill")
                         .font(.caption)
-                    Text("Şu anda regl döneminde")
+                    Text(S.currentlyOnPeriod)
                         .font(.subheadline)
                         .fontWeight(.medium)
                     Spacer()
@@ -165,7 +165,7 @@ struct DashboardView: View {
                 HStack {
                     Image(systemName: "calendar.badge.clock")
                         .font(.caption)
-                    Text("Sonraki regle \(days) gün")
+                    Text(S.daysUntilPeriod(days))
                         .font(.subheadline)
                         .fontWeight(.medium)
                     Spacer()
@@ -238,7 +238,7 @@ struct DashboardView: View {
                     .font(.title3)
                     .foregroundColor(.white)
 
-                Text("Reglim Bitti")
+                Text(S.periodEnded)
                     .font(.headline)
                     .foregroundColor(.white)
 
@@ -267,28 +267,28 @@ struct DashboardView: View {
                 value: cycleManager.currentPhase == .menstruation
                     ? (cycleManager.currentDayOfCycle.map { "\($0)" } ?? "-")
                     : (cycleManager.daysUntilNextPeriod.map { "\($0)" } ?? "-"),
-                label: cycleManager.currentPhase == .menstruation ? "Regl Günü" : "Kalan Gün"
+                label: cycleManager.currentPhase == .menstruation ? S.periodDay : S.daysLeft
             )
 
             statCard(
                 icon: "arrow.triangle.2.circlepath",
                 iconColor: .purple,
                 value: "\(cycleManager.calculatedAverageCycleLength)",
-                label: "Döngü Süresi"
+                label: S.cycleLength
             )
 
             statCard(
                 icon: "drop.fill",
                 iconColor: .red,
                 value: "\(cycleManager.calculatedAveragePeriodLength)",
-                label: "Regl Süresi"
+                label: S.periodLength
             )
 
             statCard(
                 icon: "list.clipboard",
                 iconColor: .orange,
                 value: "\(cycleManager.periods.count)",
-                label: "Toplam Kayıt"
+                label: S.totalRecords
             )
         }
     }
@@ -324,7 +324,7 @@ struct DashboardView: View {
             HStack {
                 Image(systemName: "sparkles")
                     .foregroundColor(.blue)
-                Text("Tahminler")
+                Text(S.predictions)
                     .font(.headline)
                 Spacer()
             }
@@ -334,7 +334,7 @@ struct DashboardView: View {
                     predictionRow(
                         icon: "drop.fill",
                         color: .red,
-                        title: "Tahmini Regl Bitişi",
+                        title: S.estimatedPeriodEnd,
                         date: cycleManager.formatDate(endDate)
                     )
                 }
@@ -343,7 +343,7 @@ struct DashboardView: View {
                     predictionRow(
                         icon: "calendar",
                         color: cycleManager.accentColor,
-                        title: "Sonraki Regl",
+                        title: S.nextPeriod,
                         date: cycleManager.formatDate(nextPeriod)
                     )
                 }
@@ -352,7 +352,7 @@ struct DashboardView: View {
                     predictionRow(
                         icon: "sparkle",
                         color: .blue,
-                        title: "Ovülasyon",
+                        title: S.ovulation,
                         date: cycleManager.formatDate(ovulation)
                     )
                 }
@@ -395,7 +395,7 @@ struct DashboardView: View {
                 .cornerRadius(12)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text("Verimli Pencere")
+                Text(S.fertileWindow)
                     .font(.headline)
                 Text("\(cycleManager.formatDate(start)) - \(cycleManager.formatDate(end))")
                     .font(.subheadline)
@@ -425,22 +425,22 @@ struct DashboardView: View {
             HStack {
                 Image(systemName: "drop.fill")
                     .foregroundColor(.red)
-                Text("Son Regl")
+                Text(S.lastPeriod)
                     .font(.headline)
                 Spacer()
             }
 
             VStack(spacing: 10) {
-                infoRow(label: "Başlangıç", value: cycleManager.formatDate(period.startDate))
+                infoRow(label: S.start, value: cycleManager.formatDate(period.startDate))
 
                 if let endDate = period.endDate {
-                    infoRow(label: "Bitiş", value: cycleManager.formatDate(endDate))
+                    infoRow(label: S.end, value: cycleManager.formatDate(endDate))
 
                     if let duration = period.duration {
-                        infoRow(label: "Süre", value: "\(duration) gün", valueColor: cycleManager.accentColor)
+                        infoRow(label: S.duration, value: S.daysUnit(duration), valueColor: cycleManager.accentColor)
                     }
                 } else if let estimatedEnd = cycleManager.estimatedEndDate {
-                    infoRow(label: "Tahmini Bitiş", value: "~\(cycleManager.formatDate(estimatedEnd))", valueColor: .orange)
+                    infoRow(label: S.estimatedEnd, value: "~\(cycleManager.formatDate(estimatedEnd))", valueColor: .orange)
                 }
             }
 
@@ -449,7 +449,7 @@ struct DashboardView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
                         ForEach(period.symptoms) { symptom in
-                            Text("\(symptom.emoji) \(symptom.rawValue)")
+                            Text("\(symptom.emoji) \(symptom.displayName)")
                                 .font(.caption2)
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 5)

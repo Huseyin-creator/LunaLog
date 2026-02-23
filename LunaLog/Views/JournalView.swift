@@ -18,7 +18,7 @@ struct JournalView: View {
                 }
             }
             .background(Color(.systemBackground).ignoresSafeArea())
-            .navigationTitle("Günlük")
+            .navigationTitle(S.journalTitle)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { showAddEntry = true }) {
@@ -45,9 +45,9 @@ struct JournalView: View {
                 EditJournalEntryView(entry: entry)
                     .environmentObject(cycleManager)
             }
-            .alert("Kaydı Sil", isPresented: $showDeleteAlert) {
-                Button("İptal", role: .cancel) {}
-                Button("Sil", role: .destructive) {
+            .alert(S.deleteEntry, isPresented: $showDeleteAlert) {
+                Button(S.cancel, role: .cancel) {}
+                Button(S.delete, role: .destructive) {
                     if let entry = entryToDelete {
                         withAnimation {
                             cycleManager.deleteJournalEntry(entry)
@@ -55,7 +55,7 @@ struct JournalView: View {
                     }
                 }
             } message: {
-                Text("Bu günlük kaydını silmek istediğinizden emin misiniz?")
+                Text(S.deleteJournalConfirm)
             }
         }
     }
@@ -80,11 +80,11 @@ struct JournalView: View {
             }
 
             VStack(spacing: 10) {
-                Text("Günlüğün Boş")
+                Text(S.journalEmpty)
                     .font(.title2)
                     .fontWeight(.bold)
 
-                Text("Her gün ruh halini ve notlarını\nkaydetmeye başla")
+                Text(S.journalEmptyDescription)
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
@@ -93,7 +93,7 @@ struct JournalView: View {
             Button(action: { showAddEntry = true }) {
                 HStack(spacing: 8) {
                     Image(systemName: "plus.circle.fill")
-                    Text("İlk Kaydını Ekle")
+                    Text(S.addFirstEntry)
                 }
                 .font(.headline)
                 .foregroundColor(.white)
@@ -125,14 +125,14 @@ struct JournalView: View {
                             entryToDelete = entry
                             showDeleteAlert = true
                         } label: {
-                            Label("Sil", systemImage: "trash")
+                            Label(S.delete, systemImage: "trash")
                         }
                     }
                     .swipeActions(edge: .leading) {
                         Button {
                             editingEntry = entry
                         } label: {
-                            Label("Düzenle", systemImage: "pencil")
+                            Label(S.edit, systemImage: "pencil")
                         }
                         .tint(cycleManager.accentColor)
                     }
@@ -151,7 +151,7 @@ struct JournalView: View {
                     .font(.system(size: 36))
 
                 VStack(alignment: .leading, spacing: 3) {
-                    Text(entry.mood.rawValue)
+                    Text(entry.mood.displayName)
                         .font(.headline)
                     Text(cycleManager.formatDate(entry.date))
                         .font(.caption)
@@ -183,7 +183,7 @@ struct JournalView: View {
                         ForEach(entry.symptoms) { symptom in
                             HStack(spacing: 3) {
                                 Text(symptom.emoji)
-                                Text(symptom.rawValue)
+                                Text(symptom.displayName)
                             }
                             .font(.caption2)
                             .padding(.horizontal, 10)
@@ -219,7 +219,7 @@ struct JournalDetailSheet: View {
                             .font(.system(size: 52))
 
                         VStack(alignment: .leading, spacing: 4) {
-                            Text(entry.mood.rawValue)
+                            Text(entry.mood.displayName)
                                 .font(.title2)
                                 .fontWeight(.bold)
                             Text(cycleManager.formatDate(entry.date))
@@ -229,7 +229,7 @@ struct JournalDetailSheet: View {
                             if let phase = cycleManager.phaseForDate(entry.date) {
                                 HStack(spacing: 4) {
                                     Text(phase.emoji)
-                                    Text(phase.rawValue)
+                                    Text(phase.displayName)
                                         .font(.caption)
                                         .foregroundColor(.secondary)
                                 }
@@ -248,7 +248,7 @@ struct JournalDetailSheet: View {
                             HStack {
                                 Image(systemName: "note.text")
                                     .foregroundColor(cycleManager.accentColor)
-                                Text("Not")
+                                Text(S.note)
                                     .font(.headline)
                             }
 
@@ -268,7 +268,7 @@ struct JournalDetailSheet: View {
                             HStack {
                                 Image(systemName: "heart.text.square")
                                     .foregroundColor(cycleManager.accentColor)
-                                Text("Belirtiler")
+                                Text(S.symptoms)
                                     .font(.headline)
                             }
 
@@ -276,7 +276,7 @@ struct JournalDetailSheet: View {
                                 ForEach(entry.symptoms) { symptom in
                                     HStack(spacing: 6) {
                                         Text(symptom.emoji)
-                                        Text(symptom.rawValue)
+                                        Text(symptom.displayName)
                                             .font(.subheadline)
                                     }
                                     .padding(.horizontal, 12)
@@ -296,7 +296,7 @@ struct JournalDetailSheet: View {
                 .padding(.vertical, 12)
             }
             .background(Color(.systemBackground).ignoresSafeArea())
-            .navigationTitle("Günlük Detayı")
+            .navigationTitle(S.journalDetail)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
@@ -305,13 +305,13 @@ struct JournalDetailSheet: View {
                             dismiss()
                             onEdit()
                         } label: {
-                            Label("Duzenle", systemImage: "pencil")
+                            Label(S.edit, systemImage: "pencil")
                         }
                         .foregroundColor(cycleManager.accentColor)
                     }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Kapat") { dismiss() }
+                    Button(S.close) { dismiss() }
                         .foregroundColor(cycleManager.accentColor)
                 }
             }
@@ -335,15 +335,15 @@ struct AddJournalEntryView: View {
                 journalForm
             }
             .background(Color(.systemBackground).ignoresSafeArea())
-            .navigationTitle("Günlük Ekle")
+            .navigationTitle(S.addJournal)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Vazgeç") { dismiss() }
+                    Button(S.giveUp) { dismiss() }
                         .foregroundColor(.secondary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Kaydet") {
+                    Button(S.save) {
                         let entry = JournalEntry(
                             date: Date(),
                             mood: selectedMood,
@@ -372,7 +372,7 @@ struct AddJournalEntryView: View {
 
     private var moodSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Nasıl Hissediyorsun?")
+            Text(S.howDoYouFeel)
                 .font(.headline)
                 .padding(.horizontal, 4)
 
@@ -386,7 +386,7 @@ struct AddJournalEntryView: View {
                     VStack(spacing: 6) {
                         Text(mood.emoji)
                             .font(.system(size: 32))
-                        Text(mood.rawValue)
+                        Text(mood.displayName)
                             .font(.caption2)
                             .foregroundColor(selectedMood == mood ? cycleManager.accentColor : .secondary)
                     }
@@ -415,7 +415,7 @@ struct AddJournalEntryView: View {
 
     private var symptomsSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Belirtiler")
+            Text(S.symptoms)
                 .font(.headline)
                 .padding(.horizontal, 4)
 
@@ -426,7 +426,7 @@ struct AddJournalEntryView: View {
                 ForEach(Symptom.allCases) { symptom in
                     HStack(spacing: 5) {
                         Text(symptom.emoji)
-                        Text(symptom.rawValue)
+                        Text(symptom.displayName)
                             .font(.caption)
                             .lineLimit(1)
                     }
@@ -462,7 +462,7 @@ struct AddJournalEntryView: View {
 
     private var noteSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Not")
+            Text(S.note)
                 .font(.headline)
                 .padding(.horizontal, 4)
 
@@ -509,15 +509,15 @@ struct EditJournalEntryView: View {
                 .padding(.vertical, 12)
             }
             .background(Color(.systemBackground).ignoresSafeArea())
-            .navigationTitle("Günlüğü Düzenle")
+            .navigationTitle(S.editJournal)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("Vazgeç") { dismiss() }
+                    Button(S.giveUp) { dismiss() }
                         .foregroundColor(.secondary)
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Kaydet") {
+                    Button(S.save) {
                         var updated = entry
                         updated.mood = selectedMood
                         updated.note = note
@@ -534,7 +534,7 @@ struct EditJournalEntryView: View {
 
     private var moodSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Nasıl Hissediyorsun?")
+            Text(S.howDoYouFeel)
                 .font(.headline)
                 .padding(.horizontal, 4)
 
@@ -548,7 +548,7 @@ struct EditJournalEntryView: View {
                     VStack(spacing: 6) {
                         Text(mood.emoji)
                             .font(.system(size: 32))
-                        Text(mood.rawValue)
+                        Text(mood.displayName)
                             .font(.caption2)
                             .foregroundColor(selectedMood == mood ? cycleManager.accentColor : .secondary)
                     }
@@ -577,7 +577,7 @@ struct EditJournalEntryView: View {
 
     private var symptomsSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Belirtiler")
+            Text(S.symptoms)
                 .font(.headline)
                 .padding(.horizontal, 4)
 
@@ -588,7 +588,7 @@ struct EditJournalEntryView: View {
                 ForEach(Symptom.allCases) { symptom in
                     HStack(spacing: 5) {
                         Text(symptom.emoji)
-                        Text(symptom.rawValue)
+                        Text(symptom.displayName)
                             .font(.caption)
                             .lineLimit(1)
                     }
@@ -624,7 +624,7 @@ struct EditJournalEntryView: View {
 
     private var noteSection: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Text("Not")
+            Text(S.note)
                 .font(.headline)
                 .padding(.horizontal, 4)
 

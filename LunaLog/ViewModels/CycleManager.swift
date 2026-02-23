@@ -18,6 +18,8 @@ class CycleManager: ObservableObject {
         self.settings = StorageService.shared.loadSettings()
         self.periods = StorageService.shared.loadPeriods()
         self.journalEntries = StorageService.shared.loadJournalEntries()
+        // Sync language to UserDefaults for S struct
+        UserDefaults.standard.set(settings.language.rawValue, forKey: "appLanguage")
         updateCurrentPhase()
     }
 
@@ -60,6 +62,14 @@ class CycleManager: ObservableObject {
     /// Sadece gorunum ayarlarini kaydeder (tema, API key gibi donguyü etkilemeyen ayarlar)
     func saveAppearanceSettings() {
         storage.saveSettings(settings)
+    }
+
+    /// Dil değiştirildiğinde çağrılır
+    func changeLanguage(_ language: AppLanguage) {
+        settings.language = language
+        UserDefaults.standard.set(language.rawValue, forKey: "appLanguage")
+        storage.saveSettings(settings)
+        objectWillChange.send()
     }
 
     // MARK: - Günlük CRUD
@@ -256,26 +266,18 @@ class CycleManager: ObservableObject {
     }
 
     // MARK: - Tarih Formatlama
-    static let dateFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "tr_TR")
-        f.dateFormat = "d MMMM yyyy"
-        return f
-    }()
-
-    static let shortDateFormatter: DateFormatter = {
-        let f = DateFormatter()
-        f.locale = Locale(identifier: "tr_TR")
-        f.dateFormat = "d MMM"
-        return f
-    }()
-
     func formatDate(_ date: Date) -> String {
-        CycleManager.dateFormatter.string(from: date)
+        let f = DateFormatter()
+        f.locale = S.locale
+        f.dateFormat = "d MMMM yyyy"
+        return f.string(from: date)
     }
 
     func formatShortDate(_ date: Date) -> String {
-        CycleManager.shortDateFormatter.string(from: date)
+        let f = DateFormatter()
+        f.locale = S.locale
+        f.dateFormat = "d MMM"
+        return f.string(from: date)
     }
 
     // MARK: - Bildirimler

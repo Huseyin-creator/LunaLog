@@ -1,5 +1,25 @@
 import Foundation
 
+// MARK: - Uygulama Dili
+enum AppLanguage: String, Codable, CaseIterable {
+    case turkish = "tr"
+    case english = "en"
+
+    var displayName: String {
+        switch self {
+        case .turkish: return "Türkçe"
+        case .english: return "English"
+        }
+    }
+
+    var locale: Locale {
+        switch self {
+        case .turkish: return Locale(identifier: "tr_TR")
+        case .english: return Locale(identifier: "en_US")
+        }
+    }
+}
+
 // MARK: - Döngü Fazları
 enum CyclePhase: String, Codable, CaseIterable, Identifiable {
     var id: String { rawValue }
@@ -9,31 +29,9 @@ enum CyclePhase: String, Codable, CaseIterable, Identifiable {
     case ovulation = "Ovülasyon"
     case luteal = "Luteal Faz"
 
-    var description: String {
-        switch self {
-        case .menstruation:
-            return "Regl kanaması devam ediyor"
-        case .follicular:
-            return "Vücut yeni yumurta hazırlıyor"
-        case .ovulation:
-            return "Ovülasyon dönemi - en verimli dönem"
-        case .luteal:
-            return "Bir sonraki regle hazırlık dönemi"
-        }
-    }
-
-    var detailedDescription: String {
-        switch self {
-        case .menstruation:
-            return "Regl dönemi, döngünün başlangıcıdır. Rahim iç tabakası dökülür ve kanama oluşur. Genellikle 3-7 gün sürer. Bu dönemde karın ağrısı, yorgunluk ve ruh hali değişimleri yaşanabilir. Bol su içmek, sıcak kompres uygulamak ve hafif egzersiz yapmak rahatlama sağlayabilir."
-        case .follicular:
-            return "Folliküler faz, reglin bitmesiyle başlar ve yumurtlamaya kadar devam eder. Vücudunuz östrojen üreterek rahim iç tabakasını yeniden oluşturur. Enerji seviyeniz artar, kendinizi daha enerjik ve motive hissedebilirsiniz. Bu dönem genellikle 7-10 gün sürer ve yeni projeler başlatmak için ideal bir zamandır."
-        case .ovulation:
-            return "Ovülasyon, bir yumurtanın yumurtalıktan serbest bırakıldığı zamandır. Genellikle döngünün 14. günü civarında gerçekleşir ve 24-48 saat sürer. Bu dönem en verimli dönemdir. Enerji ve özgüven en yüksek seviyededir. Hafif karın ağrısı (mittelschmerz) hissedilebilir."
-        case .luteal:
-            return "Luteal faz, yumurtlamadan sonra başlayıp bir sonraki regle kadar sürer. Progesteron seviyesi yükselir. PMS belirtileri (sivilce, şişkinlik, göğüs hassasiyeti, ruh hali değişimleri) bu dönemde ortaya çıkabilir. Genellikle 10-14 gün sürer. Dengeli beslenme ve düzenli uyku bu belirtileri hafifletebilir."
-        }
-    }
+    var displayName: String { S.cyclePhaseDisplayName(self) }
+    var description: String { S.cyclePhaseDescription(self) }
+    var detailedDescription: String { S.cyclePhaseDetailedDescription(self) }
 
     var emoji: String {
         switch self {
@@ -90,6 +88,7 @@ enum Symptom: String, Codable, CaseIterable, Identifiable {
     case insomnia = "Uykusuzluk"
 
     var id: String { rawValue }
+    var displayName: String { S.symptomDisplayName(self) }
 
     var emoji: String {
         switch self {
@@ -133,6 +132,8 @@ enum Mood: String, Codable, CaseIterable {
     case anxious = "Kaygılı"
     case angry = "Sinirli"
     case tired = "Yorgun"
+
+    var displayName: String { S.moodDisplayName(self) }
 
     var emoji: String {
         switch self {
@@ -219,6 +220,7 @@ struct UserSettings: Codable {
     var appearanceMode: AppearanceMode
     var geminiApiKey: String
     var accentColor: AppAccentColor
+    var language: AppLanguage
 
     static let `default` = UserSettings(
         averageCycleLength: 28,
@@ -227,10 +229,11 @@ struct UserSettings: Codable {
         reminderDaysBefore: 2,
         appearanceMode: .system,
         geminiApiKey: "",
-        accentColor: .pink
+        accentColor: .pink,
+        language: .turkish
     )
 
-    init(averageCycleLength: Int = 28, averagePeriodLength: Int = 5, reminderEnabled: Bool = false, reminderDaysBefore: Int = 2, appearanceMode: AppearanceMode = .system, geminiApiKey: String = "", accentColor: AppAccentColor = .pink) {
+    init(averageCycleLength: Int = 28, averagePeriodLength: Int = 5, reminderEnabled: Bool = false, reminderDaysBefore: Int = 2, appearanceMode: AppearanceMode = .system, geminiApiKey: String = "", accentColor: AppAccentColor = .pink, language: AppLanguage = .turkish) {
         self.averageCycleLength = averageCycleLength
         self.averagePeriodLength = averagePeriodLength
         self.reminderEnabled = reminderEnabled
@@ -238,6 +241,7 @@ struct UserSettings: Codable {
         self.appearanceMode = appearanceMode
         self.geminiApiKey = geminiApiKey
         self.accentColor = accentColor
+        self.language = language
     }
 
     init(from decoder: Decoder) throws {
@@ -249,5 +253,6 @@ struct UserSettings: Codable {
         appearanceMode = try container.decode(AppearanceMode.self, forKey: .appearanceMode)
         geminiApiKey = try container.decode(String.self, forKey: .geminiApiKey)
         accentColor = try container.decodeIfPresent(AppAccentColor.self, forKey: .accentColor) ?? .pink
+        language = try container.decodeIfPresent(AppLanguage.self, forKey: .language) ?? .turkish
     }
 }

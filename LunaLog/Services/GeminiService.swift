@@ -32,28 +32,13 @@ class GeminiService {
             return
         }
 
-        let systemPrompt = """
-        Sen LunaLog uygulamasının kadın sağlığı asistanısın. Adın Luna. \
-        Uzmanlık alanın yalnızca kadın sağlığı, regl döngüsü, belirtiler, hormonal değişimler, üreme sağlığı ve bunlarla ilgili konulardır. \
-        \
-        Kurallar: \
-        - Türkçe konuş, samimi ve destekleyici ol. \
-        - Kısa, net ve anlaşılır cevaplar ver. \
-        - Tıbbi teşhis koyma, gerektiğinde doktora yönlendir. \
-        - Regl döngüsüyle ilgili sorularda kullanıcının döngü verilerini referans al. \
-        - Kadın sağlığıyla ilgisi olmayan sorulara cevap verme. Kibarca "Ben sadece kadın sağlığı konularında yardımcı olabilirim" de ve konuyu kadın sağlığına yönlendir. \
-        - Zararlı, tehlikeli veya etik dışı konularda yardım etme. \
-        \
-        Kullanıcının döngü bilgileri şöyle:
-
-        \(cycleContext)
-        """
+        let systemPrompt = S.geminiSystemPrompt(cycleContext)
 
         let requestBody: [String: Any] = [
             "contents": [
                 [
                     "parts": [
-                        ["text": systemPrompt + "\n\nKullanıcı: " + userMessage]
+                        ["text": systemPrompt + "\n\n" + S.geminiUserPrefix + userMessage]
                     ]
                 ]
             ],
@@ -88,14 +73,12 @@ class GeminiService {
 
             do {
                 if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                    // Hata kontrolü
                     if let error = json["error"] as? [String: Any],
                        let message = error["message"] as? String {
                         DispatchQueue.main.async { completion(.failure(GeminiError.apiError(message))) }
                         return
                     }
 
-                    // Cevabı parse et
                     if let candidates = json["candidates"] as? [[String: Any]],
                        let first = candidates.first,
                        let content = first["content"] as? [String: Any],
@@ -123,15 +106,15 @@ enum GeminiError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noApiKey:
-            return "API anahtarı girilmemiş. Ayarlar'dan Gemini API anahtarını gir."
+            return S.errorNoApiKey
         case .invalidURL:
-            return "Geçersiz URL."
+            return S.errorInvalidURL
         case .noData:
-            return "Sunucudan yanıt alınamadı."
+            return S.errorNoData
         case .parseError:
-            return "Yanıt işlenemedi."
+            return S.errorParseError
         case .apiError(let message):
-            return "API Hatası: \(message)"
+            return S.errorApiError(message)
         }
     }
 }

@@ -14,7 +14,7 @@ class ChatViewModel: ObservableObject {
         let loaded = storage.loadChatMessages()
         if loaded.isEmpty {
             let welcome = ChatMessage(
-                content: "Merhaba! Ben Luna, kadın sağlığı asistanın. Regl döngün, belirtilerin veya kadın sağlığı hakkında sorularını yanıtlayabilirim. Nasıl yardımcı olabilirim?",
+                content: S.chatWelcome,
                 isUser: false
             )
             messages = [welcome]
@@ -57,7 +57,7 @@ class ChatViewModel: ObservableObject {
     func clearChat() {
         messages.removeAll()
         let welcome = ChatMessage(
-            content: "Merhaba! Ben Luna, kadın sağlığı asistanın. Regl döngün, belirtilerin veya kadın sağlığı hakkında sorularını yanıtlayabilirim. Nasıl yardımcı olabilirim?",
+            content: S.chatWelcome,
             isUser: false
         )
         messages.append(welcome)
@@ -67,43 +67,43 @@ class ChatViewModel: ObservableObject {
     private func buildCycleContext(_ cm: CycleManager) -> String {
         var context = ""
 
-        context += "Mevcut döngü fazı: \(cm.currentPhase.rawValue)\n"
-        context += "Ortalama döngü süresi: \(cm.calculatedAverageCycleLength) gün\n"
-        context += "Ortalama regl süresi: \(cm.calculatedAveragePeriodLength) gün\n"
+        context += S.contextCurrentPhase(cm.currentPhase.displayName) + "\n"
+        context += S.contextAvgCycle(cm.calculatedAverageCycleLength) + "\n"
+        context += S.contextAvgPeriod(cm.calculatedAveragePeriodLength) + "\n"
 
         if let day = cm.currentDayOfCycle {
-            context += "Döngünün \(day). günü\n"
+            context += S.contextCycleDay(day) + "\n"
         }
 
         if let days = cm.daysUntilNextPeriod {
-            context += "Sonraki regle \(days) gün kaldı\n"
+            context += S.contextDaysUntil(days) + "\n"
         }
 
         if let last = cm.lastPeriod {
-            context += "Son regl başlangıcı: \(cm.formatDate(last.startDate))\n"
+            context += S.contextLastStart(cm.formatDate(last.startDate)) + "\n"
             if let end = last.endDate {
-                context += "Son regl bitişi: \(cm.formatDate(end))\n"
+                context += S.contextLastEnd(cm.formatDate(end)) + "\n"
             }
             if !last.symptoms.isEmpty {
-                context += "Son belirtiler: \(last.symptoms.map { $0.rawValue }.joined(separator: ", "))\n"
+                context += S.contextSymptoms(last.symptoms.map { $0.displayName }.joined(separator: ", ")) + "\n"
             }
         }
 
         if let nextPeriod = cm.nextPeriodDate {
-            context += "Tahmini sonraki regl: \(cm.formatDate(nextPeriod))\n"
+            context += S.contextNextPeriod(cm.formatDate(nextPeriod)) + "\n"
         }
 
         if let ovulation = cm.nextOvulationDate {
-            context += "Tahmini yumurtlama: \(cm.formatDate(ovulation))\n"
+            context += S.contextOvulation(cm.formatDate(ovulation)) + "\n"
         }
 
         let recentJournals = cm.journalEntries.prefix(3)
         if !recentJournals.isEmpty {
-            context += "\nSon günlük kayıtları:\n"
+            context += "\n" + S.contextRecentJournals + "\n"
             for entry in recentJournals {
-                context += "- \(cm.formatDate(entry.date)): Ruh hali: \(entry.mood.rawValue)"
+                context += S.contextJournalEntry(cm.formatDate(entry.date), entry.mood.displayName)
                 if !entry.note.isEmpty {
-                    context += ", Not: \(entry.note)"
+                    context += S.contextJournalNote(entry.note)
                 }
                 context += "\n"
             }

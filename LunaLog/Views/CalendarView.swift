@@ -2,10 +2,10 @@ import SwiftUI
 
 struct CycleCalendarView: View {
     @EnvironmentObject var cycleManager: CycleManager
+
     @State private var displayedMonth = Date()
 
     private let calendar = Calendar.current
-    private let daysOfWeek = ["Pzt", "Sal", "Çar", "Per", "Cum", "Cmt", "Paz"]
 
     var body: some View {
         NavigationView {
@@ -21,7 +21,7 @@ struct CycleCalendarView: View {
                 .padding(.vertical, 12)
             }
             .background(Color(.systemBackground).ignoresSafeArea())
-            .navigationTitle("Takvim")
+            .navigationTitle(S.calendarTitle)
         }
     }
 
@@ -59,7 +59,7 @@ struct CycleCalendarView: View {
 
             // Day Headers
             HStack(spacing: 0) {
-                ForEach(daysOfWeek, id: \.self) { day in
+                ForEach(S.dayAbbreviations, id: \.self) { day in
                     Text(day)
                         .font(.caption2)
                         .fontWeight(.semibold)
@@ -147,7 +147,7 @@ struct CycleCalendarView: View {
     // MARK: - Legend Card
     private var legendCard: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text("Renk Açıklaması")
+            Text(S.colorLegend)
                 .font(.headline)
 
             LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: 10) {
@@ -156,7 +156,7 @@ struct CycleCalendarView: View {
                         Circle()
                             .fill(phaseColor(phase))
                             .frame(width: 10, height: 10)
-                        Text(phase.rawValue)
+                        Text(phase.displayName)
                             .font(.caption)
                             .foregroundColor(.secondary)
                         Spacer()
@@ -167,7 +167,7 @@ struct CycleCalendarView: View {
                     Circle()
                         .strokeBorder(Color.red.opacity(0.5), lineWidth: 1.5)
                         .frame(width: 10, height: 10)
-                    Text("Tahmini Regl")
+                    Text(S.estimatedPeriod)
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Spacer()
@@ -179,7 +179,7 @@ struct CycleCalendarView: View {
                             LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
                         )
                         .frame(width: 10, height: 10)
-                    Text("Bugün")
+                    Text(S.today)
                         .font(.caption)
                         .foregroundColor(.secondary)
                     Spacer()
@@ -198,7 +198,7 @@ struct CycleCalendarView: View {
             HStack {
                 Image(systemName: "sparkles")
                     .foregroundColor(.blue)
-                Text("Gelecek Tahminler")
+                Text(S.futurePredictions)
                     .font(.headline)
                 Spacer()
             }
@@ -212,7 +212,7 @@ struct CycleCalendarView: View {
                         Image(systemName: "calendar.badge.plus")
                             .font(.title2)
                             .foregroundColor(.secondary)
-                        Text("Tahmin için regl kaydı ekleyin")
+                        Text(S.addPeriodForPrediction)
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
@@ -228,7 +228,7 @@ struct CycleCalendarView: View {
                                 .frame(width: 24)
 
                             VStack(alignment: .leading, spacing: 3) {
-                                Text("\(index + 1). Sonraki Regl")
+                                Text(S.nextPeriodIndex(index + 1))
                                     .font(.subheadline)
                                     .fontWeight(.medium)
                                 Text("\(cycleManager.formatDate(prediction.start)) - \(cycleManager.formatDate(prediction.end))")
@@ -240,7 +240,7 @@ struct CycleCalendarView: View {
 
                             let daysUntil = calendar.dateComponents([.day], from: Date(), to: prediction.start).day ?? 0
                             if daysUntil > 0 {
-                                Text("\(daysUntil) gün")
+                                Text(S.daysCount(daysUntil))
                                     .font(.caption)
                                     .fontWeight(.semibold)
                                     .padding(.horizontal, 10)
@@ -264,15 +264,11 @@ struct CycleCalendarView: View {
     }
 
     // MARK: - Helpers
-    private static let monthYearFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "tr_TR")
-        formatter.dateFormat = "MMMM yyyy"
-        return formatter
-    }()
-
     private var monthYearString: String {
-        Self.monthYearFormatter.string(from: displayedMonth)
+        let formatter = DateFormatter()
+        formatter.locale = S.locale
+        formatter.dateFormat = "MMMM yyyy"
+        return formatter.string(from: displayedMonth)
     }
 
     private func previousMonth() {

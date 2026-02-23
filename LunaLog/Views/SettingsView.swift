@@ -11,7 +11,7 @@ struct SettingsView: View {
             ScrollView {
                 VStack(spacing: 20) {
                     // Bildirim Ayarları
-                    settingsSection(title: "Bildirimler", icon: "bell.fill", iconColor: .red) {
+                    settingsSection(title: S.notifications, icon: "bell.fill", iconColor: .red) {
                         VStack(spacing: 14) {
                             Toggle(isOn: Binding(
                                 get: { cycleManager.settings.reminderEnabled },
@@ -27,7 +27,7 @@ struct SettingsView: View {
                                     }
                                 }
                             )) {
-                                Text("Bildirimler")
+                                Text(S.notifications)
                                     .font(.body)
                             }
                             .tint(cycleManager.accentColor)
@@ -36,10 +36,10 @@ struct SettingsView: View {
                                 Divider()
 
                                 HStack {
-                                    Text("Kaç gün önceden haber ver")
+                                    Text(S.remindDaysBefore(cycleManager.settings.reminderDaysBefore))
                                         .font(.subheadline)
                                     Spacer()
-                                    Stepper("\(cycleManager.settings.reminderDaysBefore) gün",
+                                    Stepper(S.daysUnit(cycleManager.settings.reminderDaysBefore),
                                             value: $cycleManager.settings.reminderDaysBefore,
                                             in: 1...7)
                                         .onChange(of: cycleManager.settings.reminderDaysBefore) { _ in
@@ -48,14 +48,14 @@ struct SettingsView: View {
                                 }
 
                                 VStack(alignment: .leading, spacing: 6) {
-                                    Label("Alacağın bildirimler:", systemImage: "info.circle")
+                                    Label(S.notificationsYouWillGet, systemImage: "info.circle")
                                         .font(.caption)
                                         .foregroundColor(.secondary)
 
                                     Group {
-                                        Text("  Regl \(cycleManager.settings.reminderDaysBefore) gün sonra başlayacak")
-                                        Text("  Tahmini regl başlangıç günü")
-                                        Text("  Tahmini regl bitiş günü")
+                                        Text(S.notifPeriodReminder(cycleManager.settings.reminderDaysBefore))
+                                        Text(S.notifPeriodStart)
+                                        Text(S.notifPeriodEnd)
                                     }
                                     .font(.caption)
                                     .foregroundColor(.secondary)
@@ -64,50 +64,14 @@ struct SettingsView: View {
                         }
                     }
 
-                    // Chatbot API
-                    settingsSection(title: "Chatbot (Gemini AI)", icon: "sparkles", iconColor: .blue) {
-                        VStack(spacing: 12) {
-                            SecureField("Gemini API Anahtarı", text: Binding(
-                                get: { cycleManager.settings.geminiApiKey },
-                                set: { newValue in
-                                    cycleManager.settings.geminiApiKey = newValue
-                                    cycleManager.saveAppearanceSettings()
-                                }
-                            ))
-                            .textFieldStyle(.plain)
-                            .padding(.horizontal, 14)
-                            .padding(.vertical, 12)
-                            .background(Color(.systemGray6))
-                            .cornerRadius(12)
-
-                            if cycleManager.settings.geminiApiKey.isEmpty {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "info.circle")
-                                        .foregroundColor(.orange)
-                                    Text("aistudio.google.com adresinden ücretsiz API anahtarı alabilirsin")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
-                            } else {
-                                HStack(spacing: 8) {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .foregroundColor(.green)
-                                    Text("API anahtarı ayarlandı")
-                                        .font(.caption)
-                                        .foregroundColor(.secondary)
-                                }
-                            }
-                        }
-                    }
-
                     // Döngü Ayarları
-                    settingsSection(title: "Döngü Ayarları", icon: "gear", iconColor: .gray) {
+                    settingsSection(title: S.cycleSettings, icon: "gear", iconColor: .gray) {
                         VStack(spacing: 14) {
                             HStack {
-                                Text("Varsayılan Döngü Süresi")
+                                Text(S.defaultCycleLength)
                                     .font(.subheadline)
                                 Spacer()
-                                Stepper("\(cycleManager.settings.averageCycleLength) gün",
+                                Stepper(S.daysUnit(cycleManager.settings.averageCycleLength),
                                         value: $cycleManager.settings.averageCycleLength,
                                         in: 20...45)
                                     .onChange(of: cycleManager.settings.averageCycleLength) { _ in
@@ -118,10 +82,10 @@ struct SettingsView: View {
                             Divider()
 
                             HStack {
-                                Text("Varsayılan Regl Süresi")
+                                Text(S.defaultPeriodLength)
                                     .font(.subheadline)
                                 Spacer()
-                                Stepper("\(cycleManager.settings.averagePeriodLength) gün",
+                                Stepper(S.daysUnit(cycleManager.settings.averagePeriodLength),
                                         value: $cycleManager.settings.averagePeriodLength,
                                         in: 2...10)
                                     .onChange(of: cycleManager.settings.averagePeriodLength) { _ in
@@ -133,13 +97,13 @@ struct SettingsView: View {
 
                     // Hesaplanan Değerler
                     if cycleManager.periods.count >= 2 {
-                        settingsSection(title: "Hesaplanan Değerler", icon: "function", iconColor: .teal) {
+                        settingsSection(title: S.calculatedValues, icon: "function", iconColor: .teal) {
                             VStack(spacing: 12) {
                                 HStack {
-                                    Text("Ortalama Döngü")
+                                    Text(S.avgCycleFull)
                                         .font(.subheadline)
                                     Spacer()
-                                    Text("\(cycleManager.calculatedAverageCycleLength) gün")
+                                    Text(S.daysUnit(cycleManager.calculatedAverageCycleLength))
                                         .font(.subheadline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(cycleManager.accentColor)
@@ -148,10 +112,10 @@ struct SettingsView: View {
                                 Divider()
 
                                 HStack {
-                                    Text("Ortalama Regl Süresi")
+                                    Text(S.avgPeriodFull)
                                         .font(.subheadline)
                                     Spacer()
-                                    Text("\(cycleManager.calculatedAveragePeriodLength) gün")
+                                    Text(S.daysUnit(cycleManager.calculatedAveragePeriodLength))
                                         .font(.subheadline)
                                         .fontWeight(.semibold)
                                         .foregroundColor(cycleManager.accentColor)
@@ -161,7 +125,7 @@ struct SettingsView: View {
                     }
 
                     // Döngü Fazları Bilgisi
-                    settingsSection(title: "Döngü Fazları", icon: "info.circle", iconColor: .indigo) {
+                    settingsSection(title: S.cyclePhases, icon: "info.circle", iconColor: .indigo) {
                         VStack(spacing: 14) {
                             ForEach(CyclePhase.allCases, id: \.self) { phase in
                                 Button {
@@ -172,7 +136,7 @@ struct SettingsView: View {
                                             .font(.title2)
 
                                         VStack(alignment: .leading, spacing: 3) {
-                                            Text(phase.rawValue)
+                                            Text(phase.displayName)
                                                 .font(.subheadline)
                                                 .fontWeight(.medium)
                                                 .foregroundColor(.primary)
@@ -198,13 +162,13 @@ struct SettingsView: View {
                     }
 
                     // Veri Yönetimi
-                    settingsSection(title: "Veri Yönetimi", icon: "externaldrive", iconColor: .orange) {
+                    settingsSection(title: S.dataManagement, icon: "externaldrive", iconColor: .orange) {
                         VStack(spacing: 14) {
                             HStack {
-                                Text("Kayıtlı Döngü")
+                                Text(S.savedCycles)
                                     .font(.subheadline)
                                 Spacer()
-                                Text("\(cycleManager.periods.count) kayıt")
+                                Text(S.recordCount(cycleManager.periods.count))
                                     .font(.subheadline)
                                     .foregroundColor(.secondary)
                             }
@@ -216,7 +180,7 @@ struct SettingsView: View {
                             } label: {
                                 HStack {
                                     Image(systemName: "trash")
-                                    Text("Tüm Verileri Sil")
+                                    Text(S.deleteAllData)
                                 }
                                 .font(.subheadline)
                                 .foregroundColor(.red)
@@ -228,11 +192,40 @@ struct SettingsView: View {
                         }
                     }
 
+                    // Dil Seçimi
+                    settingsSection(title: S.language, icon: "globe", iconColor: .blue) {
+                        VStack(spacing: 14) {
+                            ForEach(AppLanguage.allCases, id: \.self) { language in
+                                Button {
+                                    cycleManager.changeLanguage(language)
+                                } label: {
+                                    HStack {
+                                        Text(language.displayName)
+                                            .font(.subheadline)
+                                            .foregroundColor(.primary)
+
+                                        Spacer()
+
+                                        if cycleManager.settings.language == language {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .foregroundColor(cycleManager.accentColor)
+                                        }
+                                    }
+                                }
+                                .buttonStyle(.plain)
+
+                                if language != AppLanguage.allCases.last {
+                                    Divider()
+                                }
+                            }
+                        }
+                    }
+
                     // Uygulama Bilgisi
-                    settingsSection(title: "Uygulama", icon: "app", iconColor: cycleManager.accentColor) {
+                    settingsSection(title: S.appSection, icon: "app", iconColor: cycleManager.accentColor) {
                         VStack(spacing: 12) {
                             HStack {
-                                Text("Sürüm")
+                                Text(S.version)
                                     .font(.subheadline)
                                 Spacer()
                                 Text("1.0.0")
@@ -243,7 +236,7 @@ struct SettingsView: View {
                             Divider()
 
                             HStack {
-                                Text("Geliştirici")
+                                Text(S.developer)
                                     .font(.subheadline)
                                 Spacer()
                                 Text("Huseyin")
@@ -257,26 +250,26 @@ struct SettingsView: View {
                 .padding(.vertical, 12)
             }
             .background(Color(.systemBackground).ignoresSafeArea())
-            .navigationTitle("Ayarlar")
-            .alert("Bildirim İzni Gerekli", isPresented: $notificationDenied) {
-                Button("Tamam", role: .cancel) {}
+            .navigationTitle(S.settingsTitle)
+            .alert(S.notifPermissionRequired, isPresented: $notificationDenied) {
+                Button(S.ok, role: .cancel) {}
             } message: {
-                Text("Bildirim göndermek için izin gerekli. Ayarlar > LunaLog > Bildirimler kısmından izin verebilirsin.")
+                Text(S.notifPermissionMessage)
             }
             .sheet(item: $selectedPhase) { phase in
                 PhaseDetailSheet(phase: phase)
                     .environmentObject(cycleManager)
             }
-            .alert("Tüm Verileri Sil", isPresented: $showResetAlert) {
-                Button("İptal", role: .cancel) {}
-                Button("Sil", role: .destructive) {
+            .alert(S.deleteAllTitle, isPresented: $showResetAlert) {
+                Button(S.cancel, role: .cancel) {}
+                Button(S.delete, role: .destructive) {
                     cycleManager.periods.removeAll()
                     StorageService.shared.savePeriods([])
                     cycleManager.settings = .default
                     cycleManager.saveSettings()
                 }
             } message: {
-                Text("Tüm regl kayıtlarınız ve ayarlarınız silinecek. Bu işlem geri alınamaz.")
+                Text(S.deleteAllMessage)
             }
         }
     }
@@ -322,7 +315,7 @@ struct PhaseDetailSheet: View {
                         Text(phase.emoji)
                             .font(.system(size: 60))
 
-                        Text(phase.rawValue)
+                        Text(phase.displayName)
                             .font(.title2)
                             .fontWeight(.bold)
 
@@ -348,7 +341,7 @@ struct PhaseDetailSheet: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Kapat") { dismiss() }
+                    Button(S.close) { dismiss() }
                         .foregroundColor(cycleManager.accentColor)
                 }
             }

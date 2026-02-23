@@ -22,7 +22,7 @@ struct ChatView: View {
             .onAppear {
                 viewModel.loadMessages()
             }
-            .navigationTitle("Asistan")
+            .navigationTitle(S.chatTitle)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: { viewModel.clearChat() }) {
@@ -176,7 +176,7 @@ struct ChatView: View {
             Divider()
 
             HStack(alignment: .bottom, spacing: 12) {
-                TextField("Mesajını yaz...", text: $messageText, axis: .vertical)
+                TextField(S.chatPlaceholder, text: $messageText, axis: .vertical)
                     .textFieldStyle(.plain)
                     .lineLimit(1...5)
                     .padding(.horizontal, 16)
@@ -217,7 +217,7 @@ struct ChatView: View {
 
     private func formatTime(_ date: Date) -> String {
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "tr_TR")
+        formatter.locale = S.locale
         formatter.dateFormat = "HH:mm"
         return formatter.string(from: date)
     }

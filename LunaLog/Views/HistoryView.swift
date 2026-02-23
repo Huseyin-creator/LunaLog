@@ -22,7 +22,7 @@ struct HistoryView: View {
                         .listRowBackground(Color.clear)
 
                         // Geçmiş Kayıtlar
-                        Section(header: Text("Geçmiş Kayıtlar")) {
+                        Section(header: Text(S.pastRecords)) {
                             ForEach(cycleManager.periods) { period in
                                 periodRow(period)
                                     .swipeActions(edge: .trailing) {
@@ -30,7 +30,7 @@ struct HistoryView: View {
                                             periodToDelete = period
                                             showDeleteAlert = true
                                         } label: {
-                                            Label("Sil", systemImage: "trash")
+                                            Label(S.delete, systemImage: "trash")
                                         }
                                     }
                                     .swipeActions(edge: .leading) {
@@ -38,7 +38,7 @@ struct HistoryView: View {
                                             selectedPeriod = period
                                             showEditSheet = true
                                         } label: {
-                                            Label("Düzenle", systemImage: "pencil")
+                                            Label(S.edit, systemImage: "pencil")
                                         }
                                         .tint(.blue)
                                     }
@@ -47,16 +47,16 @@ struct HistoryView: View {
                     }
                 }
             }
-            .navigationTitle("Geçmiş")
+            .navigationTitle(S.historyTitle)
             .sheet(isPresented: $showEditSheet) {
                 if let period = selectedPeriod {
                     EditPeriodView(period: period)
                         .environmentObject(cycleManager)
                 }
             }
-            .alert("Kaydı Sil", isPresented: $showDeleteAlert) {
-                Button("İptal", role: .cancel) {}
-                Button("Sil", role: .destructive) {
+            .alert(S.deleteRecord, isPresented: $showDeleteAlert) {
+                Button(S.cancel, role: .cancel) {}
+                Button(S.delete, role: .destructive) {
                     if let period = periodToDelete {
                         withAnimation {
                             cycleManager.deletePeriod(period)
@@ -64,7 +64,7 @@ struct HistoryView: View {
                     }
                 }
             } message: {
-                Text("Bu regl kaydını silmek istediğinizden emin misiniz?")
+                Text(S.deletePeriodConfirm)
             }
         }
     }
@@ -76,11 +76,11 @@ struct HistoryView: View {
                 .font(.system(size: 60))
                 .foregroundColor(cycleManager.accentColor.opacity(0.5))
 
-            Text("Henüz kayıt yok")
+            Text(S.noRecordsYet)
                 .font(.title2)
                 .fontWeight(.medium)
 
-            Text("İlk regl kaydınızı eklemek için\nana sayfadaki + butonuna tıklayın")
+            Text(S.noRecordsDescription)
                 .font(.body)
                 .foregroundColor(.secondary)
                 .multilineTextAlignment(.center)
@@ -94,7 +94,7 @@ struct HistoryView: View {
             HStack {
                 Image(systemName: "chart.bar.fill")
                     .foregroundColor(cycleManager.accentColor)
-                Text("İstatistikler")
+                Text(S.statistics)
                     .font(.headline)
                 Spacer()
             }
@@ -102,24 +102,24 @@ struct HistoryView: View {
             HStack(spacing: 16) {
                 statItem(
                     value: "\(cycleManager.calculatedAverageCycleLength)",
-                    label: "Ort. Döngü",
-                    unit: "gün"
+                    label: S.avgCycle,
+                    unit: S.day
                 )
 
                 Divider().frame(height: 40)
 
                 statItem(
                     value: "\(cycleManager.calculatedAveragePeriodLength)",
-                    label: "Ort. Regl",
-                    unit: "gün"
+                    label: S.avgPeriod,
+                    unit: S.day
                 )
 
                 Divider().frame(height: 40)
 
                 statItem(
                     value: "\(cycleManager.periods.count)",
-                    label: "Toplam",
-                    unit: "kayıt"
+                    label: S.total,
+                    unit: S.record
                 )
             }
 
@@ -128,10 +128,10 @@ struct HistoryView: View {
                 let lengths = calculateCycleLengths()
                 if let shortest = lengths.min(), let longest = lengths.max() {
                     HStack {
-                        Text("Döngü aralığı:")
+                        Text(S.cycleRange)
                             .font(.caption)
                             .foregroundColor(.secondary)
-                        Text("\(shortest) - \(longest) gün")
+                        Text(S.daysRange(shortest, longest))
                             .font(.caption)
                             .fontWeight(.medium)
                         Spacer()
@@ -186,7 +186,7 @@ struct HistoryView: View {
                 Spacer()
 
                 if let duration = period.duration {
-                    Text("\(duration) gün")
+                    Text(S.daysUnit(duration))
                         .font(.subheadline)
                         .fontWeight(.medium)
                         .padding(.horizontal, 10)
@@ -195,7 +195,7 @@ struct HistoryView: View {
                         .foregroundColor(cycleManager.accentColor)
                         .cornerRadius(8)
                 } else {
-                    Text("Devam ediyor")
+                    Text(S.ongoing)
                         .font(.caption)
                         .fontWeight(.medium)
                         .padding(.horizontal, 10)
@@ -211,7 +211,7 @@ struct HistoryView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
                         ForEach(period.symptoms) { symptom in
-                            Text("\(symptom.emoji) \(symptom.rawValue)")
+                            Text("\(symptom.emoji) \(symptom.displayName)")
                                 .font(.caption2)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 3)

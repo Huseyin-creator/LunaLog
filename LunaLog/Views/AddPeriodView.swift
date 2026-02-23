@@ -14,26 +14,26 @@ struct AddPeriodView: View {
         NavigationView {
             Form {
                 // Tarih Bölümü
-                Section(header: Label("Tarihler", systemImage: "calendar")) {
-                    DatePicker("Başlangıç Tarihi",
+                Section(header: Label(S.dates, systemImage: "calendar")) {
+                    DatePicker(S.startDate,
                                selection: $startDate,
                                in: ...Date(),
                                displayedComponents: .date)
-                        .environment(\.locale, Locale(identifier: "tr_TR"))
+                        .environment(\.locale, S.locale)
 
-                    Toggle("Bitiş Tarihi Ekle", isOn: $hasEndDate)
+                    Toggle(S.addEndDate, isOn: $hasEndDate)
 
                     if hasEndDate {
-                        DatePicker("Bitiş Tarihi",
+                        DatePicker(S.endDate,
                                    selection: $endDate,
                                    in: startDate...Date(),
                                    displayedComponents: .date)
-                            .environment(\.locale, Locale(identifier: "tr_TR"))
+                            .environment(\.locale, S.locale)
                     }
                 }
 
                 // Belirtiler
-                Section(header: Label("Belirtiler", systemImage: "heart.text.square")) {
+                Section(header: Label(S.symptoms, systemImage: "heart.text.square")) {
                     LazyVGrid(columns: [
                         GridItem(.flexible()),
                         GridItem(.flexible())
@@ -56,19 +56,19 @@ struct AddPeriodView: View {
                 }
 
                 // Notlar
-                Section(header: Label("Notlar", systemImage: "note.text")) {
+                Section(header: Label(S.notes, systemImage: "note.text")) {
                     TextEditor(text: $notes)
                         .frame(minHeight: 80)
                 }
             }
-            .navigationTitle("Yeni Regl Kaydı")
+            .navigationTitle(S.newPeriodRecord)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("İptal") { dismiss() }
+                    Button(S.cancel) { dismiss() }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Kaydet") {
+                    Button(S.save) {
                         saveRecord()
                     }
                     .fontWeight(.bold)
@@ -101,7 +101,7 @@ struct SymptomChip: View {
             HStack(spacing: 4) {
                 Text(symptom.emoji)
                     .font(.caption)
-                Text(symptom.rawValue)
+                Text(symptom.displayName)
                     .font(.caption)
                     .lineLimit(1)
             }
@@ -145,25 +145,25 @@ struct EditPeriodView: View {
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Label("Tarihler", systemImage: "calendar")) {
-                    DatePicker("Başlangıç Tarihi",
+                Section(header: Label(S.dates, systemImage: "calendar")) {
+                    DatePicker(S.startDate,
                                selection: $startDate,
                                in: ...Date(),
                                displayedComponents: .date)
-                        .environment(\.locale, Locale(identifier: "tr_TR"))
+                        .environment(\.locale, S.locale)
 
-                    Toggle("Bitiş Tarihi", isOn: $hasEndDate)
+                    Toggle(S.endDate, isOn: $hasEndDate)
 
                     if hasEndDate {
-                        DatePicker("Bitiş Tarihi",
+                        DatePicker(S.endDate,
                                    selection: $endDate,
                                    in: startDate...Date(),
                                    displayedComponents: .date)
-                            .environment(\.locale, Locale(identifier: "tr_TR"))
+                            .environment(\.locale, S.locale)
                     }
                 }
 
-                Section(header: Label("Belirtiler", systemImage: "heart.text.square")) {
+                Section(header: Label(S.symptoms, systemImage: "heart.text.square")) {
                     LazyVGrid(columns: [
                         GridItem(.flexible()),
                         GridItem(.flexible())
@@ -185,19 +185,19 @@ struct EditPeriodView: View {
                     .padding(.vertical, 4)
                 }
 
-                Section(header: Label("Notlar", systemImage: "note.text")) {
+                Section(header: Label(S.notes, systemImage: "note.text")) {
                     TextEditor(text: $notes)
                         .frame(minHeight: 80)
                 }
             }
-            .navigationTitle("Kaydı Düzenle")
+            .navigationTitle(S.editRecord)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("İptal") { dismiss() }
+                    Button(S.cancel) { dismiss() }
                 }
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Güncelle") {
+                    Button(S.update) {
                         var updated = period
                         updated.startDate = startDate
                         updated.endDate = hasEndDate ? endDate : nil
@@ -232,30 +232,30 @@ struct EndPeriodView: View {
                         LinearGradient(colors: [.green, .mint], startPoint: .topLeading, endPoint: .bottomTrailing)
                     )
 
-                Text("Regl Ne Zaman Bitti?")
+                Text(S.whenDidPeriodEnd)
                     .font(.title2)
                     .fontWeight(.bold)
 
                 if let last = cycleManager.lastPeriod {
-                    Text("Başlangıç: \(cycleManager.formatDate(last.startDate))")
+                    Text(S.periodStart(cycleManager.formatDate(last.startDate)))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                 }
 
                 DatePicker(
-                    "Bitiş Tarihi",
+                    S.endDate,
                     selection: $endDate,
                     in: (cycleManager.lastPeriod?.startDate ?? Date())...Date(),
                     displayedComponents: .date
                 )
                 .datePickerStyle(.graphical)
-                .environment(\.locale, Locale(identifier: "tr_TR"))
+                .environment(\.locale, S.locale)
                 .tint(cycleManager.accentColor)
 
                 Button(action: save) {
                     HStack {
                         Image(systemName: "checkmark.circle.fill")
-                        Text("Kaydet")
+                        Text(S.save)
                     }
                     .font(.headline)
                     .foregroundColor(.white)
@@ -271,11 +271,11 @@ struct EndPeriodView: View {
                 Spacer()
             }
             .padding()
-            .navigationTitle("Regl Bitişi")
+            .navigationTitle(S.periodEndTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("İptal") { dismiss() }
+                    Button(S.cancel) { dismiss() }
                 }
             }
         }

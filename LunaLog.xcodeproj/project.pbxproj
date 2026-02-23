@@ -17,6 +17,7 @@
 		5AF95C018B4FA260E7D74E0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1C9D5A507FA5E42817561FA /* Assets.xcassets */; };
 		60CAAB34DEFEFF8DE12EE05B /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C843E16291DED325C19AA /* ChatView.swift */; };
 		6146E8B96C151EFDFB853556 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF8C2EDE1457D0485314F1 /* Period.swift */; };
+		625CBCF191BBED331BC972C1 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9265244940DD18CA733900 /* Strings.swift */; };
 		8857D3F7B6A013B1BB15FEBC /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9AD86436E2244BFC80623 /* CalendarView.swift */; };
 		8C60DC4984112D4307392706 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188295CBD3E397350B2057D1 /* DashboardView.swift */; };
 		A104838000D65C7124238909 /* LunaLogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7666DC918D770BB65585823 /* LunaLogApp.swift */; };
@@ -62,6 +63,7 @@
 		2A5AF4E80D4AB0FAE4F47CF6 /* LunaLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLog.entitlements; sourceTree = "<group>"; };
 		4ABEBFBD879960D48C0F493F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
 		58A1CC3B9795F35BE968BE55 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
+		5F9265244940DD18CA733900 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		6D2295EE6558DB351D1F33DF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		763C113D36E9E61BA0431829 /* GeminiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeminiService.swift; sourceTree = "<group>"; };
 		827C843E16291DED325C19AA /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				BEEF8C2EDE1457D0485314F1 /* Period.swift */,
+				5F9265244940DD18CA733900 /* Strings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -285,6 +288,7 @@
 				6146E8B96C151EFDFB853556 /* Period.swift in Sources */,
 				D7BD20163AEF0C63877EC538 /* SettingsView.swift in Sources */,
 				26ABEDCD90E0A677ECDBC360 /* StorageService.swift in Sources */,
+				625CBCF191BBED331BC972C1 /* Strings.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
