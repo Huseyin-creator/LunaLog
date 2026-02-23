@@ -6,7 +6,7 @@ enum CyclePhase: String, Codable, CaseIterable, Identifiable {
 
     case menstruation = "Regl Dönemi"
     case follicular = "Folliküler Faz"
-    case ovulation = "Yumurtlama Dönemi"
+    case ovulation = "Ovülasyon"
     case luteal = "Luteal Faz"
 
     var description: String {
@@ -16,7 +16,7 @@ enum CyclePhase: String, Codable, CaseIterable, Identifiable {
         case .follicular:
             return "Vücut yeni yumurta hazırlıyor"
         case .ovulation:
-            return "Yumurtlama dönemi - en verimli dönem"
+            return "Ovülasyon dönemi - en verimli dönem"
         case .luteal:
             return "Bir sonraki regle hazırlık dönemi"
         }
@@ -29,7 +29,7 @@ enum CyclePhase: String, Codable, CaseIterable, Identifiable {
         case .follicular:
             return "Folliküler faz, reglin bitmesiyle başlar ve yumurtlamaya kadar devam eder. Vücudunuz östrojen üreterek rahim iç tabakasını yeniden oluşturur. Enerji seviyeniz artar, kendinizi daha enerjik ve motive hissedebilirsiniz. Bu dönem genellikle 7-10 gün sürer ve yeni projeler başlatmak için ideal bir zamandır."
         case .ovulation:
-            return "Yumurtlama dönemi, bir yumurtanın yumurtalıktan serbest bırakıldığı zamandır. Genellikle döngünün 14. günü civarında gerçekleşir ve 24-48 saat sürer. Bu dönem en verimli dönemdir. Enerji ve özgüven en yüksek seviyededir. Hafif karın ağrısı (mittelschmerz) hissedilebilir."
+            return "Ovülasyon, bir yumurtanın yumurtalıktan serbest bırakıldığı zamandır. Genellikle döngünün 14. günü civarında gerçekleşir ve 24-48 saat sürer. Bu dönem en verimli dönemdir. Enerji ve özgüven en yüksek seviyededir. Hafif karın ağrısı (mittelschmerz) hissedilebilir."
         case .luteal:
             return "Luteal faz, yumurtlamadan sonra başlayıp bir sonraki regle kadar sürer. Progesteron seviyesi yükselir. PMS belirtileri (sivilce, şişkinlik, göğüs hassasiyeti, ruh hali değişimleri) bu dönemde ortaya çıkabilir. Genellikle 10-14 gün sürer. Dengeli beslenme ve düzenli uyku bu belirtileri hafifletebilir."
         }

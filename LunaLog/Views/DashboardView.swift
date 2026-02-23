@@ -66,49 +66,54 @@ struct DashboardView: View {
 
     // MARK: - Empty State
     private var emptyStateView: some View {
-        VStack(spacing: 28) {
+        VStack(spacing: 32) {
             Spacer()
 
-            ZStack {
-                Circle()
-                    .fill(
-                        LinearGradient(colors: [cycleManager.accentGradient[0].opacity(0.15), cycleManager.accentGradient[1].opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing)
-                    )
-                    .frame(width: 140, height: 140)
+            // Büyük daire buton
+            Button(action: { showAddPeriod = true }) {
+                ZStack {
+                    // Dış halka - transparan gradient
+                    Circle()
+                        .stroke(
+                            LinearGradient(colors: [cycleManager.accentGradient[0].opacity(0.3), cycleManager.accentGradient[1].opacity(0.15)], startPoint: .topLeading, endPoint: .bottomTrailing),
+                            lineWidth: 2
+                        )
+                        .frame(width: 220, height: 220)
 
-                Image(systemName: "moon.stars.fill")
-                    .font(.system(size: 56))
-                    .symbolRenderingMode(.hierarchical)
-                    .foregroundStyle(
-                        LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
-                    )
+                    // Ana daire
+                    Circle()
+                        .fill(
+                            LinearGradient(colors: [cycleManager.accentGradient[0].opacity(0.12), cycleManager.accentGradient[1].opacity(0.06)], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+                        .frame(width: 200, height: 200)
+
+                    // İçerik
+                    VStack(spacing: 12) {
+                        Image(systemName: "moon.stars.fill")
+                            .font(.system(size: 44))
+                            .symbolRenderingMode(.hierarchical)
+                            .foregroundStyle(
+                                LinearGradient(colors: cycleManager.accentGradient, startPoint: .topLeading, endPoint: .bottomTrailing)
+                            )
+
+                        Text("İlk Kaydını\nEkle")
+                            .font(.system(size: 16, weight: .semibold))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(cycleManager.accentColor)
+                    }
+                }
             }
+            .buttonStyle(.plain)
 
             VStack(spacing: 10) {
                 Text("Merhaba!")
                     .font(.largeTitle)
                     .fontWeight(.bold)
 
-                Text("Döngünü takip etmeye başlamak için\nilk regl kaydını ekle")
+                Text("Döngünü takip etmeye başlamak için\nyukarıdaki butona dokun")
                     .font(.body)
                     .foregroundColor(.secondary)
                     .multilineTextAlignment(.center)
-            }
-
-            Button(action: { showAddPeriod = true }) {
-                HStack(spacing: 8) {
-                    Image(systemName: "plus.circle.fill")
-                    Text("Kayıt Ekle")
-                }
-                .font(.headline)
-                .foregroundColor(.white)
-                .padding(.horizontal, 36)
-                .padding(.vertical, 16)
-                .background(
-                    Capsule()
-                        .fill(LinearGradient(colors: cycleManager.accentGradient, startPoint: .leading, endPoint: .trailing))
-                )
-                .shadow(color: cycleManager.accentColor.opacity(0.3), radius: 12, x: 0, y: 6)
             }
 
             Spacer()
@@ -273,13 +278,13 @@ struct DashboardView: View {
     }
 
     private func statCard(icon: String, iconColor: Color, value: String, label: String) -> some View {
-        VStack(alignment: .leading, spacing: 12) {
+        VStack(spacing: 10) {
             Image(systemName: icon)
                 .font(.title3)
                 .foregroundColor(iconColor)
-                .padding(8)
+                .padding(10)
                 .background(iconColor.opacity(0.12))
-                .cornerRadius(10)
+                .cornerRadius(12)
 
             Text(value)
                 .font(.system(size: 28, weight: .bold, design: .rounded))
@@ -289,8 +294,9 @@ struct DashboardView: View {
                 .font(.caption)
                 .foregroundColor(.secondary)
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(16)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 18)
+        .padding(.horizontal, 12)
         .background(Color(.systemBackground))
         .cornerRadius(18)
         .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 2)
@@ -330,7 +336,7 @@ struct DashboardView: View {
                     predictionRow(
                         icon: "sparkle",
                         color: .blue,
-                        title: "Yumurtlama",
+                        title: "Ovülasyon",
                         date: cycleManager.formatDate(ovulation)
                     )
                 }
