@@ -42,6 +42,7 @@ struct LunaLogApp: App {
 
 struct ContentView: View {
     @EnvironmentObject var cycleManager: CycleManager
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
         TabView {
@@ -71,6 +72,11 @@ struct ContentView: View {
                 }
         }
         .tint(cycleManager.accentColor)
+        .onAppear {
+            if !authViewModel.isGuest {
+                cycleManager.syncFromCloud()
+            }
+        }
         .onTapGesture {
             UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
         }

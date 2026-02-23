@@ -8,19 +8,34 @@ class CycleManager: ObservableObject {
     @Published var currentPhase: CyclePhase = .follicular
     @Published var journalEntries: [JournalEntry] = []
 
-    private let storage = StorageService.shared
+    private let dataService = DataService.shared
     private let calendar = Calendar.current
 
     var accentColor: Color { settings.accentColor.color }
     var accentGradient: [Color] { settings.accentColor.gradientColors }
 
     init() {
-        self.settings = StorageService.shared.loadSettings()
-        self.periods = StorageService.shared.loadPeriods()
-        self.journalEntries = StorageService.shared.loadJournalEntries()
+        self.settings = DataService.shared.loadSettingsLocal()
+        self.periods = DataService.shared.loadPeriodsLocal()
+        self.journalEntries = DataService.shared.loadJournalEntriesLocal()
         // Sync language to UserDefaults for S struct
         UserDefaults.standard.set(settings.language.rawValue, forKey: "appLanguage")
         updateCurrentPhase()
+    }
+
+    func syncFromCloud() {
+        Task { @MainActor in
+            let cloudPeriods = await dataService.loadPeriods()
+            let cloudEntries = await dataService.loadJournalEntries()
+            let cloudSettings = await dataService.loadSettings()
+
+            self.periods = cloudPeriods
+            self.journalEntries = cloudEntries
+            self.settings = cloudSettings
+            UserDefaults.standard.set(cloudSettings.language.rawValue, forKey: "appLanguage")
+            self.updateCurrentPhase()
+            self.scheduleNotificationsIfNeeded()
+        }
     }
 
     // MARK: - CRUD İşlemleri
@@ -28,7 +43,7 @@ class CycleManager: ObservableObject {
         let record = PeriodRecord(startDate: startDate, endDate: endDate, notes: notes, symptoms: symptoms)
         periods.append(record)
         periods.sort { $0.startDate > $1.startDate }
-        storage.savePeriods(periods)
+        dataService.savePeriods(periods)
         updateCurrentPhase()
         scheduleNotificationsIfNeeded()
         WidgetCenter.shared.reloadAllTimelines()
@@ -37,7 +52,7 @@ class CycleManager: ObservableObject {
     func updatePeriod(_ period: PeriodRecord) {
         if let index = periods.firstIndex(where: { $0.id == period.id }) {
             periods[index] = period
-            storage.savePeriods(periods)
+            dataService.savePeriods(periods)
             updateCurrentPhase()
             scheduleNotificationsIfNeeded()
             WidgetCenter.shared.reloadAllTimelines()
@@ -46,14 +61,14 @@ class CycleManager: ObservableObject {
 
     func deletePeriod(_ period: PeriodRecord) {
         periods.removeAll { $0.id == period.id }
-        storage.savePeriods(periods)
+        dataService.savePeriods(periods)
         updateCurrentPhase()
         scheduleNotificationsIfNeeded()
         WidgetCenter.shared.reloadAllTimelines()
     }
 
     func saveSettings() {
-        storage.saveSettings(settings)
+        dataService.saveSettings(settings)
         updateCurrentPhase()
         scheduleNotificationsIfNeeded()
         WidgetCenter.shared.reloadAllTimelines()
@@ -61,14 +76,14 @@ class CycleManager: ObservableObject {
 
     /// Sadece gorunum ayarlarini kaydeder (tema, API key gibi donguyü etkilemeyen ayarlar)
     func saveAppearanceSettings() {
-        storage.saveSettings(settings)
+        dataService.saveSettings(settings)
     }
 
     /// Dil değiştirildiğinde çağrılır
     func changeLanguage(_ language: AppLanguage) {
         settings.language = language
         UserDefaults.standard.set(language.rawValue, forKey: "appLanguage")
-        storage.saveSettings(settings)
+        dataService.saveSettings(settings)
         objectWillChange.send()
     }
 
@@ -76,19 +91,19 @@ class CycleManager: ObservableObject {
     func addJournalEntry(_ entry: JournalEntry) {
         journalEntries.append(entry)
         journalEntries.sort { $0.date > $1.date }
-        storage.saveJournalEntries(journalEntries)
+        dataService.saveJournalEntries(journalEntries)
     }
 
     func updateJournalEntry(_ entry: JournalEntry) {
         if let index = journalEntries.firstIndex(where: { $0.id == entry.id }) {
             journalEntries[index] = entry
-            storage.saveJournalEntries(journalEntries)
+            dataService.saveJournalEntries(journalEntries)
         }
     }
 
     func deleteJournalEntry(_ entry: JournalEntry) {
         journalEntries.removeAll { $0.id == entry.id }
-        storage.saveJournalEntries(journalEntries)
+        dataService.saveJournalEntries(journalEntries)
     }
 
     func journalEntryForToday() -> JournalEntry? {

@@ -7,28 +7,37 @@ class ChatViewModel: ObservableObject {
     @Published var errorMessage: String?
     @Published var isReady = false
 
-    private let storage = StorageService.shared
+    private let dataService = DataService.shared
 
     func loadMessages() {
         guard !isReady else { return }
-        let loaded = storage.loadChatMessages()
+        let loaded = dataService.loadChatMessagesLocal()
         if loaded.isEmpty {
             let welcome = ChatMessage(
                 content: S.chatWelcome,
                 isUser: false
             )
             messages = [welcome]
-            storage.saveChatMessages(messages)
+            dataService.saveChatMessages(messages)
         } else {
             messages = loaded
         }
         isReady = true
     }
 
+    func syncFromCloud() {
+        Task { @MainActor in
+            let cloudMessages = await dataService.loadChatMessages()
+            if !cloudMessages.isEmpty {
+                self.messages = cloudMessages
+            }
+        }
+    }
+
     func sendMessage(_ text: String, cycleManager: CycleManager) {
         let userMessage = ChatMessage(content: text, isUser: true)
         messages.append(userMessage)
-        storage.saveChatMessages(messages)
+        dataService.saveChatMessages(messages)
         isLoading = true
         errorMessage = nil
 
@@ -46,7 +55,7 @@ class ChatViewModel: ObservableObject {
             case .success(let reply):
                 let botMessage = ChatMessage(content: reply, isUser: false)
                 self.messages.append(botMessage)
-                self.storage.saveChatMessages(self.messages)
+                self.dataService.saveChatMessages(self.messages)
 
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
@@ -61,7 +70,7 @@ class ChatViewModel: ObservableObject {
             isUser: false
         )
         messages.append(welcome)
-        storage.saveChatMessages(messages)
+        dataService.saveChatMessages(messages)
     }
 
     private func buildCycleContext(_ cm: CycleManager) -> String {

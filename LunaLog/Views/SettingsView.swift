@@ -343,7 +343,8 @@ struct SettingsView: View {
                 Button(S.cancel, role: .cancel) {}
                 Button(S.delete, role: .destructive) {
                     cycleManager.periods.removeAll()
-                    StorageService.shared.savePeriods([])
+                    cycleManager.journalEntries.removeAll()
+                    DataService.shared.deleteAllData()
                     cycleManager.settings = .default
                     cycleManager.saveSettings()
                 }

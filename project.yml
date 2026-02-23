@@ -62,6 +62,10 @@ targets:
       - target: LunaLogWidgetExtension
       - package: firebase-ios-sdk
         product: FirebaseAuth
+      - package: firebase-ios-sdk
+        product: FirebaseFirestore
+      - package: firebase-ios-sdk
+        product: FirebaseFirestoreSwift
       - package: google-sign-in-ios
         product: GoogleSignIn
       - package: google-sign-in-ios

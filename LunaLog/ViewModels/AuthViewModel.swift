@@ -40,6 +40,7 @@ class AuthViewModel: ObservableObject {
             switch result {
             case .success:
                 self.isLoggedIn = true
+                DataService.shared.mergeLocalDataToCloud()
             case .failure(let error):
                 self.errorMessage = error.localizedDescription
             }
