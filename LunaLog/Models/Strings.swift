@@ -496,4 +496,50 @@ struct S {
         case .indigo: return lang == .turkish ? "Lacivert" : "Indigo"
         }
     }
+
+    // MARK: - Auth
+    static var loginSubtitle: String {
+        lang == .turkish
+            ? "Döngünü takip etmek\niçin giriş yap"
+            : "Sign in to track\nyour cycle"
+    }
+    static var signInWithGoogle: String {
+        lang == .turkish ? "Google ile Giriş Yap" : "Sign in with Google"
+    }
+    static var signInWithApple: String {
+        lang == .turkish ? "Apple ile Giriş Yap" : "Sign in with Apple"
+    }
+    static var continueAsGuest: String {
+        lang == .turkish ? "Hesap oluşturmadan devam et" : "Continue without an account"
+    }
+    static var or: String {
+        lang == .turkish ? "veya" : "or"
+    }
+    static var account: String {
+        lang == .turkish ? "Hesap" : "Account"
+    }
+    static var logout: String {
+        lang == .turkish ? "Çıkış Yap" : "Sign Out"
+    }
+    static var logoutConfirmTitle: String {
+        lang == .turkish ? "Çıkış Yap" : "Sign Out"
+    }
+    static var logoutConfirmMessage: String {
+        lang == .turkish
+            ? "Hesabınızdan çıkış yapmak istediğinizden emin misiniz?"
+            : "Are you sure you want to sign out?"
+    }
+    static var authGuest: String {
+        lang == .turkish ? "Misafir" : "Guest"
+    }
+    static var guestDescription: String {
+        lang == .turkish
+            ? "Hesap oluşturmadan kullanıyorsunuz"
+            : "Using without an account"
+    }
+    static var authErrorGeneral: String {
+        lang == .turkish
+            ? "Giriş yapılırken bir hata oluştu. Lütfen tekrar deneyin."
+            : "An error occurred while signing in. Please try again."
+    }
 }

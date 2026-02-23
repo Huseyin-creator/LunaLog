@@ -2,7 +2,9 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var cycleManager: CycleManager
+    @EnvironmentObject var authViewModel: AuthViewModel
     @State private var showResetAlert = false
+    @State private var showLogoutAlert = false
     @State private var notificationDenied = false
     @State private var selectedPhase: CyclePhase?
 
@@ -10,6 +12,83 @@ struct SettingsView: View {
         NavigationView {
             ScrollView {
                 VStack(spacing: 20) {
+                    // Hesap
+                    settingsSection(title: S.account, icon: "person.circle.fill", iconColor: cycleManager.accentColor) {
+                        VStack(spacing: 14) {
+                            if authViewModel.isGuest {
+                                HStack(spacing: 12) {
+                                    Image(systemName: "person.fill.questionmark")
+                                        .font(.system(size: 36))
+                                        .foregroundColor(.secondary)
+
+                                    VStack(alignment: .leading, spacing: 3) {
+                                        Text(S.authGuest)
+                                            .font(.subheadline)
+                                            .fontWeight(.medium)
+                                        Text(S.guestDescription)
+                                            .font(.caption)
+                                            .foregroundColor(.secondary)
+                                    }
+
+                                    Spacer()
+                                }
+                            } else {
+                                HStack(spacing: 14) {
+                                    if let url = authViewModel.photoURL {
+                                        AsyncImage(url: url) { image in
+                                            image.resizable().scaledToFill()
+                                        } placeholder: {
+                                            Image(systemName: "person.circle.fill")
+                                                .font(.system(size: 44))
+                                                .foregroundColor(.secondary)
+                                        }
+                                        .frame(width: 44, height: 44)
+                                        .clipShape(Circle())
+                                    } else {
+                                        Image(systemName: "person.circle.fill")
+                                            .font(.system(size: 44))
+                                            .foregroundColor(.secondary)
+                                    }
+
+                                    VStack(alignment: .leading, spacing: 3) {
+                                        if let name = authViewModel.displayName {
+                                            Text(name)
+                                                .font(.subheadline)
+                                                .fontWeight(.medium)
+                                        }
+                                        if let email = authViewModel.email {
+                                            Text(email)
+                                                .font(.caption)
+                                                .foregroundColor(.secondary)
+                                        }
+                                        Text(authViewModel.loginProviderDisplayName)
+                                            .font(.caption2)
+                                            .foregroundColor(.secondary)
+                                    }
+
+                                    Spacer()
+                                }
+                            }
+
+                            Divider()
+
+                            Button(role: .destructive) {
+                                showLogoutAlert = true
+                            } label: {
+                                HStack {
+                                    Image(systemName: "rectangle.portrait.and.arrow.right")
+                                    Text(S.logout)
+                                }
+                                .font(.subheadline)
+                                .foregroundColor(.red)
+                                .frame(maxWidth: .infinity)
+                                .padding(.vertical, 10)
+                                .background(Color.red.opacity(0.08))
+                                .cornerRadius(10)
+                            }
+                        }
+                    }
+
                     // Bildirim Ayarları
                     settingsSection(title: S.notifications, icon: "bell.fill", iconColor: .red) {
                         VStack(spacing: 14) {
@@ -271,6 +350,14 @@ struct SettingsView: View {
             } message: {
                 Text(S.deleteAllMessage)
             }
+            .alert(S.logoutConfirmTitle, isPresented: $showLogoutAlert) {
+                Button(S.cancel, role: .cancel) {}
+                Button(S.logout, role: .destructive) {
+                    authViewModel.signOut()
+                }
+            } message: {
+                Text(S.logoutConfirmMessage)
+            }
         }
     }
 
@@ -353,4 +440,5 @@ struct PhaseDetailSheet: View {
 #Preview {
     SettingsView()
         .environmentObject(CycleManager())
+        .environmentObject(AuthViewModel())
 }

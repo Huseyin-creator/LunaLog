@@ -12,6 +12,9 @@
 		1C226BAED1C005958A367106 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAB7F4D98E7901BBC67AD5B5 /* ChatViewModel.swift */; };
 		23EB8E7A0B989FD8334AAAFA /* LunaLogWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1CF80AC2F50FCBC8EAE918 /* LunaLogWidgetBundle.swift */; };
 		26ABEDCD90E0A677ECDBC360 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A1CC3B9795F35BE968BE55 /* StorageService.swift */; };
+		2AA4918BE1471B0137FDE172 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 175ACE2B81BB74A1A9DBAA93 /* FirebaseAuth */; };
+		3AF666BFAE09FCC4E26FA6AD /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8FEE070E9EB4C21C7E803A55 /* GoogleSignInSwift */; };
+		439DE052EC6754DC2C72BC5A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9F5252BAF2A3CF56C7FA0C /* LoginView.swift */; };
 		4866E106BF3613A014BFCF2E /* CycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0256EEA38597884FF9D42 /* CycleManager.swift */; };
 		4A77FF65C41F429599618407 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABEBFBD879960D48C0F493F /* NotificationService.swift */; };
 		5AF95C018B4FA260E7D74E0A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1C9D5A507FA5E42817561FA /* Assets.xcassets */; };
@@ -19,9 +22,12 @@
 		6146E8B96C151EFDFB853556 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF8C2EDE1457D0485314F1 /* Period.swift */; };
 		625CBCF191BBED331BC972C1 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F9265244940DD18CA733900 /* Strings.swift */; };
 		8857D3F7B6A013B1BB15FEBC /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A9AD86436E2244BFC80623 /* CalendarView.swift */; };
+		89D6B92CD1D9D28889D4A616 /* AuthService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEA4B650742C72F1F42EDE0 /* AuthService.swift */; };
+		8C21C27E3E718E83A24B6432 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DFF654FE6EFA760563AC55EC /* GoogleSignIn */; };
 		8C60DC4984112D4307392706 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188295CBD3E397350B2057D1 /* DashboardView.swift */; };
 		A104838000D65C7124238909 /* LunaLogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7666DC918D770BB65585823 /* LunaLogApp.swift */; };
 		AEE7AAC4EEF81780E99DAE7F /* LunaLogWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4452DF7623B88499BA6E76 /* LunaLogWidget.swift */; };
+		B889C0394AADED3FA321E76E /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F958A1106945F004EB271A /* AuthViewModel.swift */; };
 		C44EFDC2A45A2B096480FBB7 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7821BC75BD4E53E12DF52 /* JournalView.swift */; };
 		CD3DFCFD6B5A2DB9F4A26AAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6A6720DEA4FB541A46579B /* Assets.xcassets */; };
 		CD75A1AEBEB899CE1ABD438D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C113D36E9E61BA0431829 /* GeminiService.swift */; };
@@ -59,10 +65,12 @@
 /* Begin PBXFileReference section */
 		01B0256EEA38597884FF9D42 /* CycleManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CycleManager.swift; sourceTree = "<group>"; };
 		188295CBD3E397350B2057D1 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		1B9F5252BAF2A3CF56C7FA0C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1D2F811799F7986C58CF91DD /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Secrets.plist; sourceTree = "<group>"; };
 		20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LunaLogWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5AF4E80D4AB0FAE4F47CF6 /* LunaLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLog.entitlements; sourceTree = "<group>"; };
 		4ABEBFBD879960D48C0F493F /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		4AEA4B650742C72F1F42EDE0 /* AuthService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthService.swift; sourceTree = "<group>"; };
 		58A1CC3B9795F35BE968BE55 /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		5F9265244940DD18CA733900 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		6D2295EE6558DB351D1F33DF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -78,10 +86,24 @@
 		BEEF8C2EDE1457D0485314F1 /* Period.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Period.swift; sourceTree = "<group>"; };
 		CD1CF80AC2F50FCBC8EAE918 /* LunaLogWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LunaLogWidgetBundle.swift; sourceTree = "<group>"; };
 		D9DDE821A91C9A7B768C432D /* LunaLogWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLogWidget.entitlements; sourceTree = "<group>"; };
+		E3F958A1106945F004EB271A /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		EAB7F4D98E7901BBC67AD5B5 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		ECA129CCB9D2A1A9ECBCA919 /* LunaLog.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LunaLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1C9D5A507FA5E42817561FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5CF7DBCB4DA5CA8CBAEC7D33 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2AA4918BE1471B0137FDE172 /* FirebaseAuth in Frameworks */,
+				8C21C27E3E718E83A24B6432 /* GoogleSignIn in Frameworks */,
+				3AF666BFAE09FCC4E26FA6AD /* GoogleSignInSwift in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		4C177CD908A4E595A19DB83C /* LunaLogWidget */ = {
@@ -113,6 +135,7 @@
 				188295CBD3E397350B2057D1 /* DashboardView.swift */,
 				8515A46612D56F12E8CB037A /* HistoryView.swift */,
 				85A7821BC75BD4E53E12DF52 /* JournalView.swift */,
+				1B9F5252BAF2A3CF56C7FA0C /* LoginView.swift */,
 				6D2295EE6558DB351D1F33DF /* SettingsView.swift */,
 			);
 			path = Views;
@@ -145,6 +168,7 @@
 		E5C49BBDE8CBE50F1991A471 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				4AEA4B650742C72F1F42EDE0 /* AuthService.swift */,
 				763C113D36E9E61BA0431829 /* GeminiService.swift */,
 				4ABEBFBD879960D48C0F493F /* NotificationService.swift */,
 				58A1CC3B9795F35BE968BE55 /* StorageService.swift */,
@@ -155,6 +179,7 @@
 		F1784C815A8D872304F21D9B /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				E3F958A1106945F004EB271A /* AuthViewModel.swift */,
 				EAB7F4D98E7901BBC67AD5B5 /* ChatViewModel.swift */,
 				01B0256EEA38597884FF9D42 /* CycleManager.swift */,
 			);
@@ -179,6 +204,7 @@
 			buildPhases = (
 				B969CE70F4A29F659957FC58 /* Sources */,
 				34EAECC482F7C036A51E3025 /* Resources */,
+				5CF7DBCB4DA5CA8CBAEC7D33 /* Frameworks */,
 				38BB0A0CDCE9CFEE004DE3B0 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -188,6 +214,9 @@
 			);
 			name = LunaLog;
 			packageProductDependencies = (
+				175ACE2B81BB74A1A9DBAA93 /* FirebaseAuth */,
+				DFF654FE6EFA760563AC55EC /* GoogleSignIn */,
+				8FEE070E9EB4C21C7E803A55 /* GoogleSignInSwift */,
 			);
 			productName = LunaLog;
 			productReference = ECA129CCB9D2A1A9ECBCA919 /* LunaLog.app */;
@@ -230,6 +259,10 @@
 			);
 			mainGroup = 4D126B3E15805EADC23D26C8;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				3486C929ED937C839474E25C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				9057747C332C0508003B1373 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
@@ -277,6 +310,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				F4AD0B3FB7E34F88E0D4B5CC /* AddPeriodView.swift in Sources */,
+				89D6B92CD1D9D28889D4A616 /* AuthService.swift in Sources */,
+				B889C0394AADED3FA321E76E /* AuthViewModel.swift in Sources */,
 				8857D3F7B6A013B1BB15FEBC /* CalendarView.swift in Sources */,
 				60CAAB34DEFEFF8DE12EE05B /* ChatView.swift in Sources */,
 				1C226BAED1C005958A367106 /* ChatViewModel.swift in Sources */,
@@ -285,6 +320,7 @@
 				CD75A1AEBEB899CE1ABD438D /* GeminiService.swift in Sources */,
 				085983DE58883F8142AEE905 /* HistoryView.swift in Sources */,
 				C44EFDC2A45A2B096480FBB7 /* JournalView.swift in Sources */,
+				439DE052EC6754DC2C72BC5A /* LoginView.swift in Sources */,
 				A104838000D65C7124238909 /* LunaLogApp.swift in Sources */,
 				4A77FF65C41F429599618407 /* NotificationService.swift in Sources */,
 				6146E8B96C151EFDFB853556 /* Period.swift in Sources */,
@@ -555,6 +591,43 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3486C929ED937C839474E25C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 11.0.0;
+			};
+		};
+		9057747C332C0508003B1373 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		175ACE2B81BB74A1A9DBAA93 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3486C929ED937C839474E25C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		8FEE070E9EB4C21C7E803A55 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9057747C332C0508003B1373 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		DFF654FE6EFA760563AC55EC /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9057747C332C0508003B1373 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = EC69F52A5835D3937785AF0C /* Project object */;
 }

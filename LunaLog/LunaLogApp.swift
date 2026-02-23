@@ -4,7 +4,12 @@ import UserNotifications
 @main
 struct LunaLogApp: App {
     @StateObject private var cycleManager = CycleManager()
+    @StateObject private var authViewModel = AuthViewModel()
     @Environment(\.scenePhase) private var scenePhase
+
+    init() {
+        AuthService.shared.configure()
+    }
 
     var colorScheme: ColorScheme? {
         switch cycleManager.settings.appearanceMode {
@@ -16,14 +21,21 @@ struct LunaLogApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .environmentObject(cycleManager)
-                .preferredColorScheme(colorScheme)
-                .onChange(of: scenePhase) { phase in
-                    if phase == .active {
-                        UNUserNotificationCenter.current().setBadgeCount(0)
-                    }
+            Group {
+                if authViewModel.isLoggedIn {
+                    ContentView()
+                } else {
+                    LoginView()
                 }
+            }
+            .environmentObject(cycleManager)
+            .environmentObject(authViewModel)
+            .preferredColorScheme(colorScheme)
+            .onChange(of: scenePhase) { phase in
+                if phase == .active {
+                    UNUserNotificationCenter.current().setBadgeCount(0)
+                }
+            }
         }
     }
 }
@@ -68,4 +80,5 @@ struct ContentView: View {
 #Preview {
     ContentView()
         .environmentObject(CycleManager())
+        .environmentObject(AuthViewModel())
 }

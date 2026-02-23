@@ -6,6 +6,14 @@ options:
   developmentLanguage: tr
   xcodeVersion: "1500"
 
+packages:
+  firebase-ios-sdk:
+    url: https://github.com/firebase/firebase-ios-sdk.git
+    minorVersion: "11.0.0"
+  google-sign-in-ios:
+    url: https://github.com/google/GoogleSignIn-iOS.git
+    minorVersion: "8.0.0"
+
 settings:
   base:
     SWIFT_VERSION: "5.0"
@@ -37,6 +45,12 @@ targets:
         ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES: YES
     dependencies:
       - target: LunaLogWidgetExtension
+      - package: firebase-ios-sdk
+        product: FirebaseAuth
+      - package: google-sign-in-ios
+        product: GoogleSignIn
+      - package: google-sign-in-ios
+        product: GoogleSignInSwift
 
   LunaLogWidgetExtension:
     type: app-extension
