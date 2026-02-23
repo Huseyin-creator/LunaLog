@@ -506,9 +506,6 @@ struct S {
     static var signInWithGoogle: String {
         lang == .turkish ? "Google ile Giriş Yap" : "Sign in with Google"
     }
-    static var signInWithApple: String {
-        lang == .turkish ? "Apple ile Giriş Yap" : "Sign in with Apple"
-    }
     static var continueAsGuest: String {
         lang == .turkish ? "Hesap oluşturmadan devam et" : "Continue without an account"
     }
