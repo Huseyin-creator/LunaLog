@@ -80,12 +80,12 @@ struct DashboardView: View {
                         )
                         .frame(width: 220, height: 220)
 
-                    // Ana daire
+                    // Ana daire - stroke'un hemen içine oturuyor
                     Circle()
                         .fill(
                             LinearGradient(colors: [cycleManager.accentGradient[0].opacity(0.12), cycleManager.accentGradient[1].opacity(0.06)], startPoint: .topLeading, endPoint: .bottomTrailing)
                         )
-                        .frame(width: 200, height: 200)
+                        .frame(width: 216, height: 216)
 
                     // İçerik
                     VStack(spacing: 12) {
@@ -147,7 +147,21 @@ struct DashboardView: View {
                 }
             }
 
-            if let days = cycleManager.daysUntilNextPeriod {
+            if cycleManager.currentPhase == .menstruation {
+                HStack {
+                    Image(systemName: "drop.fill")
+                        .font(.caption)
+                    Text("Şu anda regl döneminde")
+                        .font(.subheadline)
+                        .fontWeight(.medium)
+                    Spacer()
+                }
+                .foregroundColor(.white.opacity(0.9))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(.ultraThinMaterial.opacity(0.3))
+                .cornerRadius(12)
+            } else if let days = cycleManager.daysUntilNextPeriod {
                 HStack {
                     Image(systemName: "calendar.badge.clock")
                         .font(.caption)
@@ -248,10 +262,12 @@ struct DashboardView: View {
     private var statsGrid: some View {
         LazyVGrid(columns: [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)], spacing: 14) {
             statCard(
-                icon: "calendar.badge.clock",
-                iconColor: cycleManager.accentColor,
-                value: cycleManager.daysUntilNextPeriod.map { "\($0)" } ?? "-",
-                label: "Kalan Gün"
+                icon: cycleManager.currentPhase == .menstruation ? "drop.fill" : "calendar.badge.clock",
+                iconColor: cycleManager.currentPhase == .menstruation ? .red : cycleManager.accentColor,
+                value: cycleManager.currentPhase == .menstruation
+                    ? (cycleManager.currentDayOfCycle.map { "\($0)" } ?? "-")
+                    : (cycleManager.daysUntilNextPeriod.map { "\($0)" } ?? "-"),
+                label: cycleManager.currentPhase == .menstruation ? "Regl Günü" : "Kalan Gün"
             )
 
             statCard(
