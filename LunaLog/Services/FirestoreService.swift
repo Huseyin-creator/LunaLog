@@ -130,6 +130,15 @@ class FirestoreService {
     // MARK: - Settings
     func saveSettings(_ settings: UserSettings, userId: String) async throws {
         try userDoc(userId).setData(from: settings, merge: true)
+
+        // Kullanici bilgilerini de dokumana ekle (Console'da kolay gorunsun)
+        let auth = AuthService.shared
+        var profileData: [String: Any] = [:]
+        if let name = auth.displayName { profileData["displayName"] = name }
+        if let email = auth.email { profileData["email"] = email }
+        if !profileData.isEmpty {
+            try? await userDoc(userId).setData(profileData, merge: true)
+        }
     }
 
     func loadSettings(userId: String) async throws -> UserSettings? {
