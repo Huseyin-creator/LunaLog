@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		009FBD1F978226746225B44E /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DFF654FE6EFA760563AC55EC /* GoogleSignIn */; };
+		009FBD1F978226746225B44E /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8FEE070E9EB4C21C7E803A55 /* GoogleSignInSwift */; };
 		06B2A44EC0677E0C2F417019 /* Period.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEEF8C2EDE1457D0485314F1 /* Period.swift */; };
 		085983DE58883F8142AEE905 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8515A46612D56F12E8CB037A /* HistoryView.swift */; };
 		10653EA3A6910AA05C7059B0 /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333B5868C3513B5FF80B4AA2 /* FirestoreService.swift */; };
@@ -15,7 +15,7 @@
 		23EB8E7A0B989FD8334AAAFA /* LunaLogWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD1CF80AC2F50FCBC8EAE918 /* LunaLogWidgetBundle.swift */; };
 		26ABEDCD90E0A677ECDBC360 /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58A1CC3B9795F35BE968BE55 /* StorageService.swift */; };
 		2AA4918BE1471B0137FDE172 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 175ACE2B81BB74A1A9DBAA93 /* FirebaseAuth */; };
-		3AF666BFAE09FCC4E26FA6AD /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 896C4AD16D1D002B0FB07481 /* FirebaseFirestoreSwift */; };
+		3AF666BFAE09FCC4E26FA6AD /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = DFF654FE6EFA760563AC55EC /* GoogleSignIn */; };
 		439DE052EC6754DC2C72BC5A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B9F5252BAF2A3CF56C7FA0C /* LoginView.swift */; };
 		4866E106BF3613A014BFCF2E /* CycleManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01B0256EEA38597884FF9D42 /* CycleManager.swift */; };
 		4A77FF65C41F429599618407 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ABEBFBD879960D48C0F493F /* NotificationService.swift */; };
@@ -32,7 +32,6 @@
 		A104838000D65C7124238909 /* LunaLogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7666DC918D770BB65585823 /* LunaLogApp.swift */; };
 		AEE7AAC4EEF81780E99DAE7F /* LunaLogWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC4452DF7623B88499BA6E76 /* LunaLogWidget.swift */; };
 		B889C0394AADED3FA321E76E /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3F958A1106945F004EB271A /* AuthViewModel.swift */; };
-		C1C3E03FEC577D5F68D76EDB /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8FEE070E9EB4C21C7E803A55 /* GoogleSignInSwift */; };
 		C44EFDC2A45A2B096480FBB7 /* JournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A7821BC75BD4E53E12DF52 /* JournalView.swift */; };
 		CD3DFCFD6B5A2DB9F4A26AAD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9E6A6720DEA4FB541A46579B /* Assets.xcassets */; };
 		CD75A1AEBEB899CE1ABD438D /* GeminiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 763C113D36E9E61BA0431829 /* GeminiService.swift */; };
@@ -107,9 +106,8 @@
 			files = (
 				2AA4918BE1471B0137FDE172 /* FirebaseAuth in Frameworks */,
 				8C21C27E3E718E83A24B6432 /* FirebaseFirestore in Frameworks */,
-				3AF666BFAE09FCC4E26FA6AD /* FirebaseFirestoreSwift in Frameworks */,
-				009FBD1F978226746225B44E /* GoogleSignIn in Frameworks */,
-				C1C3E03FEC577D5F68D76EDB /* GoogleSignInSwift in Frameworks */,
+				3AF666BFAE09FCC4E26FA6AD /* GoogleSignIn in Frameworks */,
+				009FBD1F978226746225B44E /* GoogleSignInSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -229,7 +227,6 @@
 			packageProductDependencies = (
 				175ACE2B81BB74A1A9DBAA93 /* FirebaseAuth */,
 				91105CDDC31A5FE80E740906 /* FirebaseFirestore */,
-				896C4AD16D1D002B0FB07481 /* FirebaseFirestoreSwift */,
 				DFF654FE6EFA760563AC55EC /* GoogleSignIn */,
 				8FEE070E9EB4C21C7E803A55 /* GoogleSignInSwift */,
 			);
@@ -624,11 +621,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3486C929ED937C839474E25C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseAuth;
-		};
-		896C4AD16D1D002B0FB07481 /* FirebaseFirestoreSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3486C929ED937C839474E25C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseFirestoreSwift;
 		};
 		8FEE070E9EB4C21C7E803A55 /* GoogleSignInSwift */ = {
 			isa = XCSwiftPackageProductDependency;
