@@ -163,15 +163,17 @@ class DataService {
 
     // MARK: - Merge Local to Cloud
     func mergeLocalDataToCloud() {
-        guard shouldUseFirestore, let uid = userId else { return }
+        guard let uid = AuthService.shared.currentUser?.uid else { return }
         Task {
-            let cloudPeriods = try? await remote.loadPeriods(userId: uid)
+            let cloudSettings = try? await remote.loadSettings(userId: uid)
 
-            if cloudPeriods?.isEmpty ?? true {
+            if cloudSettings == nil {
                 let localPeriods = local.loadPeriods()
                 let localEntries = local.loadJournalEntries()
                 let localMessages = local.loadChatMessages()
                 let localSettings = local.loadSettings()
+
+                try? await remote.saveSettings(localSettings, userId: uid)
 
                 if !localPeriods.isEmpty {
                     try? await remote.saveAllPeriods(localPeriods, userId: uid)
@@ -182,7 +184,6 @@ class DataService {
                 if !localMessages.isEmpty {
                     try? await remote.saveAllChatMessages(localMessages, userId: uid)
                 }
-                try? await remote.saveSettings(localSettings, userId: uid)
             }
         }
     }
