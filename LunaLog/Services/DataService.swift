@@ -165,6 +165,9 @@ class DataService {
     func mergeLocalDataToCloud() {
         guard let uid = AuthService.shared.currentUser?.uid else { return }
         Task {
+            // Profil bilgilerini kaydet (displayName, email)
+            try? await remote.saveUserProfile(userId: uid)
+
             let cloudSettings = try? await remote.loadSettings(userId: uid)
 
             if cloudSettings == nil {
