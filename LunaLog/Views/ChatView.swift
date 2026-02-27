@@ -98,7 +98,7 @@ struct ChatView: View {
             }
 
             VStack(alignment: message.isUser ? .trailing : .leading, spacing: 4) {
-                Text(message.content)
+                Text(markdownToAttributed(message.content))
                     .font(.body)
                     .foregroundColor(message.isUser ? .white : .primary)
                     .padding(.horizontal, 16)
@@ -213,6 +213,10 @@ struct ChatView: View {
         messageText = ""
         isTextFieldFocused = false
         viewModel.sendMessage(text, cycleManager: cycleManager)
+    }
+
+    private func markdownToAttributed(_ text: String) -> AttributedString {
+        (try? AttributedString(markdown: text, options: .init(interpretedSyntax: .inlineOnlyPreservingWhitespace))) ?? AttributedString(text)
     }
 
     private func formatTime(_ date: Date) -> String {
