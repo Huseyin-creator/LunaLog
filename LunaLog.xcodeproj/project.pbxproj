@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 77;
+	objectVersion = 63;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -71,7 +71,7 @@
 		188295CBD3E397350B2057D1 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		1B9F5252BAF2A3CF56C7FA0C /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		1D2F811799F7986C58CF91DD /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Secrets.plist; sourceTree = "<group>"; };
-		20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = LunaLogWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		20F1B023C4773E511F91AA0F /* LunaLogWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LunaLogWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2A5AF4E80D4AB0FAE4F47CF6 /* LunaLog.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLog.entitlements; sourceTree = "<group>"; };
 		333B5868C3513B5FF80B4AA2 /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
 		37EE13E5586C73AE2B9E5305 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
@@ -95,7 +95,7 @@
 		D9DDE821A91C9A7B768C432D /* LunaLogWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LunaLogWidget.entitlements; sourceTree = "<group>"; };
 		E3F958A1106945F004EB271A /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		EAB7F4D98E7901BBC67AD5B5 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
-		ECA129CCB9D2A1A9ECBCA919 /* LunaLog.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = LunaLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		ECA129CCB9D2A1A9ECBCA919 /* LunaLog.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LunaLog.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1C9D5A507FA5E42817561FA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -275,7 +275,6 @@
 				3486C929ED937C839474E25C /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				9057747C332C0508003B1373 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 			);
-			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -365,6 +364,7 @@
 				CODE_SIGN_ENTITLEMENTS = LunaLog/LunaLog.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MLMG7NFF7U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = LunaLog/Info.plist;
@@ -449,6 +449,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = LunaLogWidget/LunaLogWidget.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MLMG7NFF7U;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = LunaLogWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -529,6 +530,7 @@
 				CODE_SIGN_ENTITLEMENTS = LunaLog/LunaLog.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MLMG7NFF7U;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = LunaLog/Info.plist;
@@ -550,6 +552,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = LunaLogWidget/LunaLogWidget.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = MLMG7NFF7U;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = LunaLogWidget/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
